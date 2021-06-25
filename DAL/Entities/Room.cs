@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DAL.Entities
+namespace NixWebApplication.DAL.Entities
 {
     public class Room
     {

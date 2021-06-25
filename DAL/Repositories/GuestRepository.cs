@@ -1,13 +1,13 @@
-﻿using DAL.EF;
-using DAL.Entities;
-using DAL.Interfaces;
+﻿using NixWebApplication.DAL.EF;
+using NixWebApplication.DAL.Entities;
+using NixWebApplication.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace NixWebApplication.DAL.Repositories
 {
     class GuestRepository : IRepository<Guest>
     {

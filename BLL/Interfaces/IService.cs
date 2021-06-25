@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Interfaces
+namespace NixWebApplication.BLL.Interfaces
 {
     public interface IService<T>
     {

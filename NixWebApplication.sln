@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication", "NixWebApplication\NixWebApplication.csproj", "{A9FDFF29-7EF8-4709-9F11-5217917FA760}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{9D4CDDF3-72A4-4316-A6A2-A2F827F5D2ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.DAL", "DAL\NixWebApplication.DAL.csproj", "{9D4CDDF3-72A4-4316-A6A2-A2F827F5D2ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{8A57AF34-8D26-4BE1-A849-F092E6DCF33E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.BLL", "BLL\NixWebApplication.BLL.csproj", "{8A57AF34-8D26-4BE1-A849-F092E6DCF33E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

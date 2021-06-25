@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using BLL.DTO;
-using BLL.Interfaces;
-using DAL.Entities;
-using DAL.Interfaces;
+using NixWebApplication.BLL.DTO;
+using NixWebApplication.BLL.Interfaces;
+using NixWebApplication.DAL.Entities;
+using NixWebApplication.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Services
+namespace NixWebApplication.BLL.Services
 {
     public class BookingService : IService<BookingDTO>
     {

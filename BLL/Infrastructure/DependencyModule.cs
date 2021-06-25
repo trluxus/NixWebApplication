@@ -1,5 +1,5 @@
-﻿using DAL.Interfaces;
-using DAL.Repositories;
+﻿using NixWebApplication.DAL.Interfaces;
+using NixWebApplication.DAL.Repositories;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Infrastructure
+namespace NixWebApplication.BLL.Infrastructure
 {
     public class DependencyModule : NinjectModule
     {
