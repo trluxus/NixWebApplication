@@ -38,7 +38,7 @@ namespace DAL.Repositories
 
         public IEnumerable<PriceToCategory> GetAll()
         {
-            return db.PricesToCategories.
+            return db.PricesToCategories;
         }
     }
 }
