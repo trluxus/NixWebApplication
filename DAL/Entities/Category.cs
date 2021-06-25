@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class Guest
+    public class Category
     {
         [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Patronymic { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public string Address { get; set; }
+        public int Beds { get; set; }
     }
 }
