@@ -13,6 +13,11 @@ namespace DAL.Repositories
     {
         private Context db;
 
+        public PriceToCategoryRepository(Context db)
+        {
+            this.db = db;
+        }
+
         public void Create(PriceToCategory priceToCategory)
         {
             db.PricesToCategories.Add(priceToCategory);
