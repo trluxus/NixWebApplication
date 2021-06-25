@@ -16,7 +16,7 @@ namespace DAL.Entities
 
         public string Name { get; set; }
         public int CategoryId { get; set; }
-        public bool IsAtive { get; set; }
+        public bool IsActive { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category RoomCategory { get; set; }
