@@ -11,9 +11,9 @@ namespace NixWebApplication.DAL.Repositories
 {
     class PriceToCategoryRepository : IRepository<PriceToCategory>
     {
-        private Context db;
+        private NixAppContext db;
 
-        public PriceToCategoryRepository(Context db)
+        public PriceToCategoryRepository(NixAppContext db)
         {
             this.db = db;
         }

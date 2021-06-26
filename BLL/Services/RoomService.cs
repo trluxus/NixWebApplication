@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Services
 {
-    public class RoomService : IService<RoomDTO>
+    public class RoomService : IRoomService
     {
         private IWorkUnit Database { get; set; }
 
@@ -20,14 +20,12 @@ namespace NixWebApplication.BLL.Services
             Database = database;
         }
 
-        public void Create(RoomDTO item)
+        public void Create(RoomDTO room)
         {
-            throw new NotImplementedException();
-        }
+            var mapper = new MapperConfiguration(cfg =>
+                 cfg.CreateMap<RoomDTO, Room>()).CreateMapper();
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
+            Database.Rooms.Create(mapper.Map<RoomDTO, Room>(room));
         }
 
         public RoomDTO Get(int id)
@@ -55,6 +53,21 @@ namespace NixWebApplication.BLL.Services
             ).CreateMapper();
 
             return mapper.Map<IEnumerable<Room>, List<RoomDTO>>(Database.Rooms.GetAll());
+        }
+
+        public IEnumerable<RoomDTO> FindEmpty(DateTime enterDate, DateTime leaveDate)
+        {
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Room, RoomDTO>()
+            ).CreateMapper();
+
+            var empty = Database.Rooms.GetAll().Select(i => i.Id).
+                Except(Database.Bookings.GetAll().
+                Where(i => i.EnterDate < leaveDate && enterDate < i.LeaveDate).
+                Select(i => i.RoomId));
+
+            return mapper.Map<IEnumerable<Room>, List<RoomDTO>>(Database.Rooms.GetAll().
+                Where(i => empty.Contains(i.Id)));
         }
     }
 }

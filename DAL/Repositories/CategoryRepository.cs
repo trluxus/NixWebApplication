@@ -11,9 +11,9 @@ namespace NixWebApplication.DAL.Repositories
 {
     class CategoryRepository : IRepository<Category>
     {
-        private Context db;
+        private NixAppContext db;
 
-        public CategoryRepository(Context db)
+        public CategoryRepository(NixAppContext db)
         {
             this.db = db;
         }

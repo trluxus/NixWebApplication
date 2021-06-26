@@ -14,7 +14,7 @@ namespace NixWebApplication.DAL.Entities
         public int Id { get; set; }
 
         public int GuestId { get; set; }
-        public int RoomtId { get; set; }
+        public int RoomId { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime EnterDate { get; set; }
         public DateTime LeaveDate { get; set; }

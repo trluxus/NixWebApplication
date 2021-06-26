@@ -11,9 +11,9 @@ namespace NixWebApplication.DAL.Repositories
 {
     class RoomRepository : IRepository<Room>
     {
-        private Context db;
+        private NixAppContext db;
 
-        public RoomRepository(Context db)
+        public RoomRepository(NixAppContext db)
         {
             this.db = db;
         }

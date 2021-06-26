@@ -1,4 +1,5 @@
-﻿using NixWebApplication.DAL.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using NixWebApplication.DAL.EF;
 using NixWebApplication.DAL.Entities;
 using NixWebApplication.DAL.Interfaces;
 using System;
@@ -11,12 +12,17 @@ namespace NixWebApplication.DAL.Repositories
 {
     public class EFWorkUnit : IWorkUnit
     {
-        private Context db;
+        private NixAppContext db;
         private BookingRepository bookingRepository;
         private CategoryRepository categoryRepository;
         private GuestRepository guestRepository;
         private PriceToCategoryRepository priceToCategoryRepository;
         private RoomRepository roomRepository;
+
+        public EFWorkUnit(NixAppContext dbContext)
+        {
+            db = dbContext;
+        }
 
         public IRepository<Booking> Bookings
         {

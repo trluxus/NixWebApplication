@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.DAL.EF
 {
-    public class Context : DbContext
+    public class NixAppContext : DbContext
     {
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -16,9 +16,20 @@ namespace NixWebApplication.DAL.EF
         public DbSet<PriceToCategory> PricesToCategories { get; set; }
         public DbSet<Room> Rooms { get; set; }
 
+        public NixAppContext(DbContextOptions<NixAppContext> options)
+            : base(options)
+        {
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PriceToCategory>().Property(i => i.Price).HasPrecision(9, 2);
+
+            modelBuilder.Entity<Guest>().HasData(SeedData.GuestInitializer());
+            modelBuilder.Entity<Category>().HasData(SeedData.CategoryInitializer());
+            modelBuilder.Entity<PriceToCategory>().HasData(SeedData.PriceToCategoryInitializer());
+            modelBuilder.Entity<Room>().HasData(SeedData.RoomInitializer());
         }
     }
 }

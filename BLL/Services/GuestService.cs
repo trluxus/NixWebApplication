@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Services
 {
-    public class GuestService : IService<GuestDTO>
+    public class GuestService : IGuestService
     {
         private IWorkUnit Database { get; set; }
         
@@ -20,14 +20,12 @@ namespace NixWebApplication.BLL.Services
             Database = database;
         }
 
-        public void Create(GuestDTO item)
+        public void Create(GuestDTO guest)
         {
-            throw new NotImplementedException();
-        }
+            var mapper = new MapperConfiguration(cfg =>
+                 cfg.CreateMap<GuestDTO, Guest>()).CreateMapper();
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
+            Database.Guests.Create(mapper.Map<GuestDTO, Guest>(guest));
         }
 
         public GuestDTO Get(int id)
@@ -48,8 +46,7 @@ namespace NixWebApplication.BLL.Services
         public IEnumerable<GuestDTO> GetAll()
         {
             var mapper = new MapperConfiguration(cfg =>
-                cfg.CreateMap<Guest, GuestDTO>()
-            ).CreateMapper();
+                cfg.CreateMap<Guest, GuestDTO>()).CreateMapper();
 
             return mapper.Map<IEnumerable<Guest>, List<GuestDTO>>(Database.Guests.GetAll());
         }

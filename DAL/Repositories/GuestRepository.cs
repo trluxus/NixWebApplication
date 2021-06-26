@@ -11,9 +11,9 @@ namespace NixWebApplication.DAL.Repositories
 {
     class GuestRepository : IRepository<Guest>
     {
-        private Context db;
+        private NixAppContext db;
 
-        public GuestRepository(Context db)
+        public GuestRepository(NixAppContext db)
         {
             this.db = db;
         }

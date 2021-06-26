@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Services
 {
-    public class BookingService : IService<BookingDTO>
+    public class BookingService : IBookingService
     {
         private IWorkUnit Database { get; set; }
 
@@ -20,14 +20,12 @@ namespace NixWebApplication.BLL.Services
             Database = database;
         }
 
-        public void Create(BookingDTO item)
+        public void Create(BookingDTO booking)
         {
-            throw new NotImplementedException();
-        }
+            var mapper = new MapperConfiguration(cfg =>
+                 cfg.CreateMap<BookingDTO, Booking>()).CreateMapper();
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
+            Database.Bookings.Create(mapper.Map<BookingDTO, Booking>(booking));
         }
 
         public BookingDTO Get(int id)
@@ -71,6 +69,22 @@ namespace NixWebApplication.BLL.Services
             ).CreateMapper();
 
             return mapper.Map<IEnumerable<Booking>, List<BookingDTO>>(Database.Bookings.GetAll());
+        }
+
+        public decimal Income(DateTime date)
+        {
+            var roomCategory = Database.Rooms.GetAll().
+                Join(Database.Categories.GetAll(),
+                r => r.CategoryId,
+                c => c.Id,
+                (r, c) => new { RoomId = r.Id, CategoryId = c.Id });
+
+            var categoriesForIncome = Database.Bookings.GetAll().Where(i => i.EnterDate <= date && date <= i.LeaveDate).
+                Join(roomCategory, b => b.RoomId, rc => rc.RoomId, (b, rc) => new { Category = rc.CategoryId }).Select(i => i.Category);
+
+
+            return Database.PricesToCategories.GetAll().Where(i => i.StartDate <= date && date <= i.EndDate).
+                Where(i => categoriesForIncome.Contains(i.CategoryId)).Select(i => i.Price).Sum();
         }
     }
 }

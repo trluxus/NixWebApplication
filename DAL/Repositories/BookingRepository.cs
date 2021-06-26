@@ -11,9 +11,9 @@ namespace NixWebApplication.DAL.Repositories
 {
     class BookingRepository : IRepository<Booking>
     {
-        private Context db;
+        private NixAppContext db;
 
-        public BookingRepository(Context db)
+        public BookingRepository(NixAppContext db)
         {
             this.db = db;
         }
