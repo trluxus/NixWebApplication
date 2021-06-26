@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BLL\NixWebApplication.BLL.csproj" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\NixWebApplication.BLL\NixWebApplication.BLL.csproj" />
   </ItemGroup>
 
 </Project>

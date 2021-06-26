@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\NixWebApplication.DAL.csproj" />
+    <ProjectReference Include="..\NixWebApplication.DAL\NixWebApplication.DAL.csproj" />
   </ItemGroup>
 
 </Project>
