@@ -16,46 +16,63 @@ namespace NixWebApplication.API.Controllers
     public class BookingController : ControllerBase
     {
         private IBookingService service;
-        private IMapper mapper;
+        private readonly IMapper mapper;
 
-        public BookingController(IBookingService service)
+        public BookingController(IBookingService service, IMapper mapper)
         {
             this.service = service;
-
-            mapper = new MapperConfiguration(cfg =>
-                cfg.CreateMap<BookingDTO, BookingModel>()).CreateMapper();
+            this.mapper = mapper;
         }
 
-        // GET: api/<GuestController>
+        // GET: api/<BookingController>
         [HttpGet]
-        public IEnumerable<BookingModel> Get()
+        public ActionResult<BookingModel> Get()
         {
             var data = service.GetAll();
 
             var bookings = mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
-            return bookings;
+            return Ok(bookings);
         }
 
-        // GET api/<GuestController>/5
+        // GET api/<BookingController>/5
         [HttpGet("{id}")]
         public ActionResult<BookingModel> Get(int id)
         {
             try
             {
-                BookingDTO data = service.Get(id);
-                var booking = new BookingModel();
+                var data = service.Get(id);
 
-                if (data != null)
-                {
-                    booking = mapper.Map<BookingDTO, BookingModel>(data);
-                }
+                if (data == null)
+                    throw new NullReferenceException();
+
+                var booking = new BookingModel();
+                
+                booking = mapper.Map<BookingDTO, BookingModel>(data);
 
                 return Ok(booking);
             }
             catch (NullReferenceException ex)
             {
-                return NotFound(ex);
+                return NotFound();
             }
+        }
+
+        // POST api/<BookingController>
+        [HttpPost]
+        public ActionResult<BookingModel> Build(BookingModel booking)
+        {
+            service.Create(mapper.Map<BookingModel, BookingDTO>(booking));
+
+            return Ok(booking);
+        }
+
+        // Get api/<BookingController>/
+        [HttpGet, Route("income")]
+        public ActionResult<RoomModel> Income([FromBody] DateTime date)
+        {
+            var res = service.Income(date);
+
+            return Ok(res);
         }
     }
 }

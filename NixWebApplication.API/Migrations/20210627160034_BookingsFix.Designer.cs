@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NixWebApplication.DAL.EF;
 
 namespace NixWebApplication.API.Migrations
 {
     [DbContext(typeof(NixAppContext))]
-    partial class NixAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210627160034_BookingsFix")]
+    partial class BookingsFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,16 +29,16 @@ namespace NixWebApplication.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("BookingDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EnterDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("GuestId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LeaveDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -87,18 +89,15 @@ namespace NixWebApplication.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Patronymic")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -135,14 +134,14 @@ namespace NixWebApplication.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -191,7 +190,6 @@ namespace NixWebApplication.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
