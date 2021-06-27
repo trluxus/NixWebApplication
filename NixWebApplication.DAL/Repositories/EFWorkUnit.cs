@@ -12,7 +12,7 @@ namespace NixWebApplication.DAL.Repositories
 {
     public class EFWorkUnit : IWorkUnit
     {
-        private NixAppContext db;
+        private readonly NixAppContext db;
         private BookingRepository bookingRepository;
         private CategoryRepository categoryRepository;
         private GuestRepository guestRepository;
@@ -28,7 +28,7 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (bookingRepository != null)
+                if (bookingRepository == null)
                     bookingRepository = new BookingRepository(db);
 
                 return bookingRepository;
@@ -39,7 +39,7 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (categoryRepository != null)
+                if (categoryRepository == null)
                     categoryRepository = new CategoryRepository(db);
 
                 return categoryRepository;
@@ -50,7 +50,7 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (guestRepository != null)
+                if (guestRepository == null)
                     guestRepository = new GuestRepository(db);
 
                 return guestRepository;
@@ -61,7 +61,7 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (priceToCategoryRepository != null)
+                if (priceToCategoryRepository == null)
                     priceToCategoryRepository = new PriceToCategoryRepository(db);
 
                 return priceToCategoryRepository;
@@ -72,7 +72,7 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (roomRepository != null)
+                if (roomRepository == null)
                     roomRepository = new RoomRepository(db);
 
                 return roomRepository;
