@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NixWebApplication.DAL.Repositories;
+using NixWebApplication.API.Controllers;
 
 namespace NixWebApplication.API
 {
@@ -34,8 +35,10 @@ namespace NixWebApplication.API
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
                 b => b.MigrationsAssembly("NixWebApplication.API")));
 
-            services.AddWorkUnit(); 
-            
+            services.AddBLLServices();
+
+            services.AddAutoMapper(typeof(GuestService), typeof(GuestController));
+
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IGuestService, GuestService>(); 
             services.AddScoped<IRoomService, RoomService>();

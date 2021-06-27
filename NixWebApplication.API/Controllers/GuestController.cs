@@ -18,24 +18,22 @@ namespace NixWebApplication.API.Controllers
     public class GuestController : ControllerBase
     {
         private IGuestService service;
-        private IMapper mapper;
+        private readonly IMapper mapper;
 
-        public GuestController(IGuestService service)
+        public GuestController(IGuestService service, IMapper mapper)
         {
             this.service = service;
-
-            mapper = new MapperConfiguration(cfg =>
-                cfg.CreateMap<GuestDTO, GuestModel>()).CreateMapper();
+            this.mapper = mapper;
         }
 
         // GET: api/<GuestController>
         [HttpGet]
-        public IEnumerable<GuestModel> Get()
+        public ActionResult<GuestModel> Get()
         {
             var data = service.GetAll();
-
             var guests = mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data);
-            return guests;
+
+            return Ok(guests);
         }
 
         // GET api/<GuestController>/5
@@ -44,38 +42,28 @@ namespace NixWebApplication.API.Controllers
         {
             try
             {
-                GuestDTO data = service.Get(id);
-                var guest = new GuestModel();
+                var data = service.Get(id);
 
-                if (data != null)
-                {
-                    guest = mapper.Map<GuestDTO, GuestModel>(data);
-                }
+                if (data == null)
+                    throw new NullReferenceException();
+
+                var guest = mapper.Map<GuestDTO, GuestModel>(data);
 
                 return Ok(guest);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                return NotFound(ex);
+                return NotFound();
             }
         }
 
         // POST api/<GuestController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<GuestModel> Register(GuestModel guest)
         {
-        }
+            service.Create(mapper.Map<GuestModel, GuestDTO>(guest));
 
-        // PUT api/<GuestController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<GuestController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok(guest);
         }
     }
 }

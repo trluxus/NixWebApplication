@@ -14,40 +14,29 @@ namespace NixWebApplication.BLL.Services
     public class GuestService : IGuestService
     {
         private IWorkUnit Database { get; set; }
-        
-        public GuestService(IWorkUnit database)
+        private readonly IMapper mapper;
+
+        public GuestService(IWorkUnit database, IMapper mapper)
         {
-            Database = database;
+            this.Database = database;
+            this.mapper = mapper;
         }
 
         public void Create(GuestDTO guest)
         {
-            var mapper = new MapperConfiguration(cfg =>
-                 cfg.CreateMap<GuestDTO, Guest>()).CreateMapper();
-
             Database.Guests.Create(mapper.Map<GuestDTO, Guest>(guest));
+            Database.Save();
         }
 
         public GuestDTO Get(int id)
         {
             var guest = Database.Guests.Get(id);
 
-            return new GuestDTO()
-            {
-                Id = guest.Id,
-                Name = guest.Name,
-                Surname = guest.Surname,
-                Patronymic = guest.Patronymic,
-                BirthDate = guest.BirthDate,
-                Address = guest.Address
-            };
+            return mapper.Map<Guest, GuestDTO>(guest);    
         }
 
         public IEnumerable<GuestDTO> GetAll()
         {
-            var mapper = new MapperConfiguration(cfg =>
-                cfg.CreateMap<Guest, GuestDTO>()).CreateMapper();
-
             return mapper.Map<IEnumerable<Guest>, List<GuestDTO>>(Database.Guests.GetAll());
         }
     }

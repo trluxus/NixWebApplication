@@ -17,7 +17,7 @@ namespace NixWebApplication.BLL.Services
 
         public RoomService(IWorkUnit database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         public void Create(RoomDTO room)

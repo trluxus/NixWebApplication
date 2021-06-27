@@ -17,7 +17,7 @@ namespace NixWebApplication.BLL.Services
 
         public BookingService(IWorkUnit database)
         {
-            Database = database;
+            this.Database = database;
         }
 
         public void Create(BookingDTO booking)

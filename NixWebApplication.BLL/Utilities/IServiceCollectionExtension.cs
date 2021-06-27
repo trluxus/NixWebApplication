@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NixWebApplication.DAL.EF;
+using NixWebApplication.BLL.Services;
 using NixWebApplication.DAL.Interfaces;
 using NixWebApplication.DAL.Repositories;
 using System;
@@ -12,7 +12,7 @@ namespace NixWebApplication.BLL.Utilities
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection AddWorkUnit(this IServiceCollection services)
+        public static IServiceCollection AddBLLServices(this IServiceCollection services)
         {
             services.AddScoped<IWorkUnit, EFWorkUnit>();
 
