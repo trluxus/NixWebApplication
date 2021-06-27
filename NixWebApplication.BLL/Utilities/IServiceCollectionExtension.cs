@@ -12,14 +12,9 @@ namespace NixWebApplication.BLL.Utilities
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection AddWorkUnit(this IServiceCollection services, NixAppContext context)
+        public static IServiceCollection AddWorkUnit(this IServiceCollection services)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            services.AddScoped<IWorkUnit, EFWorkUnit>(uow => new EFWorkUnit(context));
+            services.AddScoped<IWorkUnit, EFWorkUnit>();
 
             return services;
         }

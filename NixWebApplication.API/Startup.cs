@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NixWebApplication.DAL.Repositories;
 
 namespace NixWebApplication.API
 {
@@ -33,13 +34,10 @@ namespace NixWebApplication.API
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
                 b => b.MigrationsAssembly("NixWebApplication.API")));
 
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            NixAppContext appDbContext = serviceProvider.GetService<NixAppContext>();
-
-            services.AddWorkUnit(appDbContext); // <-- Here passing the DbConext instance to the class library
+            services.AddWorkUnit(); 
             
             services.AddScoped<IBookingService, BookingService>();
-            services.AddScoped<IGuestService, GuestService>();
+            services.AddScoped<IGuestService, GuestService>(); 
             services.AddScoped<IRoomService, RoomService>();
 
             services.AddControllers();
