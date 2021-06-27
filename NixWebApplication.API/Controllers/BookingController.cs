@@ -67,10 +67,10 @@ namespace NixWebApplication.API.Controllers
         }
 
         // Get api/<BookingController>/
-        [HttpGet, Route("income")]
-        public ActionResult<RoomModel> Income([FromBody] DateTime date)
+        [HttpGet("income/{date}"), Route("income")]
+        public ActionResult<RoomModel> Income(string date)
         {
-            var res = service.Income(date);
+            var res = service.Income(DateTime.Parse(date));
 
             return Ok(res);
         }
