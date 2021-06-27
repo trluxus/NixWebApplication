@@ -77,8 +77,14 @@ namespace NixWebApplication.BLL.Services
                 c => c.Id,
                 (r, c) => new { RoomId = r.Id, CategoryId = c.Id });
 
-            var categoriesForIncome = Database.Bookings.GetAll().Where(i => i.EnterDate <= date && date <= i.LeaveDate).
-                Join(roomCategory, b => b.RoomId, rc => rc.RoomId, (b, rc) => new { Category = rc.CategoryId }).Select(i => i.Category);
+            var categoriesForIncome = Database.Bookings.GetAll()
+                .Where(i => i.EnterDate.Month <= date.Month 
+                    && date.Month <= i.LeaveDate.Month)
+                .Join(roomCategory, 
+                    b => b.RoomId, 
+                    rc => rc.RoomId, 
+                    (b, rc) => new { Category = rc.CategoryId })
+                .Select(i => i.Category);
 
             return Database.PricesToCategories.GetAll().Where(i => i.StartDate <= date && date <= i.EndDate).
                 Where(i => categoriesForIncome.Contains(i.CategoryId)).Select(i => i.Price).Sum();

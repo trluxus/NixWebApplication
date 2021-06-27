@@ -13,10 +13,13 @@ namespace NixWebApplication.BLL.Mappers
     {
         public BookingServiceMapperProfile()
         {
-            CreateMap<Booking, BookingDTO>();
-            CreateMap<Room, RoomDTO>();
             CreateMap<Guest, GuestDTO>();
-            CreateMap<BookingDTO, Booking>();
+            CreateMap<Room, RoomDTO>();
+
+            CreateMap<Booking, BookingDTO>()
+                .ForMember(i => i.BookingGuest, i => i.MapFrom(j => j.BookingGuest))
+                .ForMember(i => i.BookingRoom, i => i.MapFrom(j => j.BookingRoom))
+                .ReverseMap();  
         }
     }
 }

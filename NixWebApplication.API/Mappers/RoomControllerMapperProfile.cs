@@ -12,10 +12,10 @@ namespace NixWebApplication.API.Mappers
     {
         public RoomControllerMapperProfile()
         {
-            CreateMap<RoomDTO, RoomModel>();
+            CreateMap<RoomDTO, RoomModel>()
+                .ForMember(i => i.RoomCategory, i => i.MapFrom(j => j.RoomCategory))
+                .ReverseMap();
             CreateMap<CategoryDTO, CategoryModel>();
-            CreateMap<RoomModel, RoomDTO>();
-            CreateMap<CategoryModel, CategoryDTO>();
         }
     }
 }

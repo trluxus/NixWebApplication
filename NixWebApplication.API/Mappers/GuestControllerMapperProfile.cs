@@ -12,8 +12,7 @@ namespace NixWebApplication.API.Mappers
     {
         public GuestControllerMapperProfile()
         {
-            CreateMap<GuestDTO, GuestModel>();
-            CreateMap<GuestModel, GuestDTO>();
+            CreateMap<GuestDTO, GuestModel>().ReverseMap();
         }
     }
 }

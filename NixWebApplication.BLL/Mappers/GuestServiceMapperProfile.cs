@@ -13,8 +13,7 @@ namespace NixWebApplication.BLL.Mappers
     {
         public GuestServiceMapperProfile()
         {
-            CreateMap<Guest, GuestDTO>();
-            CreateMap<GuestDTO, Guest>();
+            CreateMap<Guest, GuestDTO>().ReverseMap();
         }
     }
 }

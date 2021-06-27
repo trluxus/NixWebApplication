@@ -13,9 +13,11 @@ namespace NixWebApplication.BLL.Mappers
     {
         public RoomServiceMapperProfile()
         {
-            CreateMap<Room, RoomDTO>();
             CreateMap<Category, CategoryDTO>();
-            CreateMap<RoomDTO, Room>();
+
+            CreateMap<Room, RoomDTO>()
+                .ForMember(i => i.RoomCategory, i => i.MapFrom(j => j.RoomCategory))
+                .ReverseMap();
         }
     }
 }
