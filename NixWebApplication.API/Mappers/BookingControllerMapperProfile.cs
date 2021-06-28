@@ -12,9 +12,10 @@ namespace NixWebApplication.API.Mappers
     {
         public BookingControllerMapperProfile()
         {
-            CreateMap<RoomDTO, RoomModel>();
-            CreateMap<GuestDTO, GuestModel>();
-
+            CreateMap<RoomDTO, RoomModel>()
+                .ReverseMap();
+            CreateMap<GuestDTO, GuestModel>()
+                .ReverseMap();
             CreateMap<BookingDTO, BookingModel>()
                 .ForMember(i => i.BookingGuest, i => i.MapFrom(j => j.BookingGuest))
                 .ForMember(i => i.BookingRoom, i => i.MapFrom(j => j.BookingRoom))

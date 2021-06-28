@@ -15,7 +15,8 @@ namespace NixWebApplication.API.Mappers
             CreateMap<RoomDTO, RoomModel>()
                 .ForMember(i => i.RoomCategory, i => i.MapFrom(j => j.RoomCategory))
                 .ReverseMap();
-            CreateMap<CategoryDTO, CategoryModel>();
+            CreateMap<CategoryDTO, CategoryModel>()
+                .ReverseMap();
         }
     }
 }

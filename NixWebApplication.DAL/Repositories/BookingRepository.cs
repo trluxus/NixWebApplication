@@ -1,4 +1,5 @@
-﻿using NixWebApplication.DAL.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using NixWebApplication.DAL.EF;
 using NixWebApplication.DAL.Entities;
 using NixWebApplication.DAL.Interfaces;
 using System;
@@ -33,12 +34,17 @@ namespace NixWebApplication.DAL.Repositories
 
         public Booking Get(int id)
         {
-            return db.Bookings.Find(id);
+            return db.Bookings
+                .Include(b => b.BookingGuest)
+                .Include(b => b.BookingRoom)
+                .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Booking> GetAll()
         {
-            return db.Bookings;
+            return db.Bookings
+                .Include(b => b.BookingGuest)
+                .Include(b => b.BookingRoom);
         }
     }
 }

@@ -71,7 +71,6 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("empty/{startDate}/{endDate}"), Route("empty")]
         public ActionResult<RoomModel> FindEmpty(string startDate, string endDate)
         {
-            //var data = service.FindEmpty(startDate, endDate);
             var data = service.FindEmpty(DateTime.Parse(startDate), DateTime.Parse(endDate));
 
             var res = mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);

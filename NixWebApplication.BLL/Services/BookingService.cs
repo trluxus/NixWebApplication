@@ -32,36 +32,7 @@ namespace NixWebApplication.BLL.Services
         {
             var booking = Database.Bookings.Get(id);
 
-            return mapper.Map<Booking, BookingDTO>(booking);
-
-            //return new BookingDTO()
-            //{
-            //    Id = booking.Id,
-            //    BookingDate = booking.BookingDate,
-            //    EnterDate = booking.EnterDate,
-            //    LeaveDate = booking.LeaveDate,
-            //    BookingGuest = new GuestDTO()
-            //    {
-            //        Id = booking.BookingGuest.Id,
-            //        Name = booking.BookingGuest.Name,
-            //        Surname = booking.BookingGuest.Surname,
-            //        Patronymic = booking.BookingGuest.Patronymic,
-            //        BirthDate = booking.BookingGuest.BirthDate,
-            //        Address = booking.BookingGuest.Address
-            //    },
-            //    BookingRoom = new RoomDTO()
-            //    {
-            //        Id = booking.BookingRoom.Id,
-            //        Name = booking.BookingRoom.Name,
-            //        IsActive = booking.BookingRoom.IsActive,
-            //        RoomCategory = new CategoryDTO
-            //        {
-            //            Id = booking.BookingRoom.RoomCategory.Id,
-            //            Name = booking.BookingRoom.RoomCategory.Name,
-            //            Beds = booking.BookingRoom.RoomCategory.Beds
-            //        }
-            //    }
-            //};
+            return mapper.Map<Booking, BookingDTO>(booking); 
         }
 
         public IEnumerable<BookingDTO> GetAll()
