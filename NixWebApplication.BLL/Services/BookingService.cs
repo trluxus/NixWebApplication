@@ -13,42 +13,42 @@ namespace NixWebApplication.BLL.Services
 {
     public class BookingService : IBookingService
     {
-        private IWorkUnit Database { get; set; }
-        private readonly IMapper mapper;
+        private IWorkUnit _database { get; set; }
+        private readonly IMapper _mapper;
 
         public BookingService(IWorkUnit database, IMapper mapper)
         {
-            this.Database = database;
-            this.mapper = mapper;
+            this._database = database;
+            this._mapper = mapper;
         }
 
         public void Create(BookingDTO booking)
         {
-            Database.Bookings.Create(mapper.Map<BookingDTO, Booking>(booking));
-            Database.Save();
+            _database.Bookings.Create(_mapper.Map<BookingDTO, Booking>(booking));
+            _database.Save();
         }
 
         public BookingDTO Get(int id)
         {
-            var booking = Database.Bookings.Get(id);
+            var booking = _database.Bookings.Get(id);
 
-            return mapper.Map<Booking, BookingDTO>(booking); 
+            return _mapper.Map<Booking, BookingDTO>(booking); 
         }
 
         public IEnumerable<BookingDTO> GetAll()
         {
-            return mapper.Map<IEnumerable<Booking>, List<BookingDTO>>(Database.Bookings.GetAll());
+            return _mapper.Map<IEnumerable<Booking>, List<BookingDTO>>(_database.Bookings.GetAll());
         }
 
         public decimal Income(DateTime date)
         {
-            var roomCategory = Database.Rooms.GetAll().
-                Join(Database.Categories.GetAll(),
+            var roomCategory = _database.Rooms.GetAll().
+                Join(_database.Categories.GetAll(),
                 r => r.CategoryId,
                 c => c.Id,
                 (r, c) => new { RoomId = r.Id, CategoryId = c.Id });
 
-            var categoriesForIncome = Database.Bookings.GetAll()
+            var categoriesForIncome = _database.Bookings.GetAll()
                 .Where(i => i.EnterDate.Month <= date.Month 
                     && date.Month <= i.LeaveDate.Month)
                 .Join(roomCategory, 
@@ -57,7 +57,7 @@ namespace NixWebApplication.BLL.Services
                     (b, rc) => new { Category = rc.CategoryId })
                 .Select(i => i.Category);
 
-            return Database.PricesToCategories.GetAll().Where(i => i.StartDate <= date && date <= i.EndDate).
+            return _database.PricesToCategories.GetAll().Where(i => i.StartDate <= date && date <= i.EndDate).
                 Where(i => categoriesForIncome.Contains(i.CategoryId)).Select(i => i.Price).Sum();
         }
     }

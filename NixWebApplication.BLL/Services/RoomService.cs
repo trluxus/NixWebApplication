@@ -13,43 +13,43 @@ namespace NixWebApplication.BLL.Services
 {
     public class RoomService : IRoomService
     {
-        private IWorkUnit Database { get; set; }
-        private readonly IMapper mapper;
+        private IWorkUnit _database { get; set; }
+        private readonly IMapper _mapper;
 
         public RoomService(IWorkUnit database, IMapper mapper)
         {
-            this.Database = database;
-            this.mapper = mapper;
+            this._database = database;
+            this._mapper = mapper;
         }
 
         public void Create(RoomDTO room)
         {
-            Database.Rooms.Create(mapper.Map<RoomDTO, Room>(room));
-            Database.Save();
+            _database.Rooms.Create(_mapper.Map<RoomDTO, Room>(room));
+            _database.Save();
         }
 
         public RoomDTO Get(int id)
         {
-            var room = Database.Rooms.Get(id);
+            var room = _database.Rooms.Get(id);
 
-            return mapper.Map<Room, RoomDTO>(room);
+            return _mapper.Map<Room, RoomDTO>(room);
         }
 
         public IEnumerable<RoomDTO> GetAll()
         {
-            return mapper.Map<IEnumerable<Room>, List<RoomDTO>>(Database.Rooms.GetAll());
+            return _mapper.Map<IEnumerable<Room>, List<RoomDTO>>(_database.Rooms.GetAll());
         }
 
         public IEnumerable<RoomDTO> FindEmpty(DateTime enterDate, DateTime leaveDate)
         {
-            var empty = Database.Rooms.GetAll().Select(i => i.Id).
-                Except(Database.Bookings.GetAll().
+            var empty = _database.Rooms.GetAll().Select(i => i.Id).
+                Except(_database.Bookings.GetAll().
                 Where(i => i.EnterDate < leaveDate && enterDate < i.LeaveDate).
                 Select(i => i.RoomId));
 
-            var res = Database.Rooms.GetAll().Where(i => empty.Contains(i.Id) && i.IsActive);
+            var res = _database.Rooms.GetAll().Where(i => empty.Contains(i.Id) && i.IsActive);
 
-            return mapper.Map<IEnumerable<Room>, List<RoomDTO>>(res);
+            return _mapper.Map<IEnumerable<Room>, List<RoomDTO>>(res);
         }
     }
 }
