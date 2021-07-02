@@ -11,16 +11,16 @@ namespace NixWebApplication.DAL.Repositories
 {
     class GuestRepository : IRepository<Guest>
     {
-        private NixAppContext db;
+        private NixAppContext _db;
 
         public GuestRepository(NixAppContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         public void Create(Guest guest)
         {
-            db.Guests.Add(guest);
+            _db.Guests.Add(guest);
         }
 
         public void Delete(int id)
@@ -28,17 +28,17 @@ namespace NixWebApplication.DAL.Repositories
             var guest = Get(id);
 
             if (guest != null)
-                db.Guests.Remove(guest);
+                _db.Guests.Remove(guest);
         }
 
         public Guest Get(int id)
         {
-            return db.Guests.Find(id);
+            return _db.Guests.Find(id);
         }
 
         public IEnumerable<Guest> GetAll()
         {
-            return db.Guests;
+            return _db.Guests;
         }
     }
 }

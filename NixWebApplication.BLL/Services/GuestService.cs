@@ -13,7 +13,7 @@ namespace NixWebApplication.BLL.Services
 {
     public class GuestService : IGuestService
     {
-        private IWorkUnit _database { get; set; }
+        private IWorkUnit _database;
         private readonly IMapper _mapper;
 
         public GuestService(IWorkUnit database, IMapper mapper)

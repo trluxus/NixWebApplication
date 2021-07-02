@@ -12,16 +12,17 @@ namespace NixWebApplication.DAL.Repositories
 {
     class RoomRepository : IRepository<Room>
     {
-        private NixAppContext db;
+        private NixAppContext _db;
 
         public RoomRepository(NixAppContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         public void Create(Room room)
         {
-            db.Rooms.Add(room);
+            _db.Attach(room.RoomCategory);
+            _db.Rooms.Add(room);
         }
 
         public void Delete(int id)
@@ -29,19 +30,19 @@ namespace NixWebApplication.DAL.Repositories
             var room = Get(id);
 
             if (room != null)
-                db.Rooms.Remove(room);
+                _db.Rooms.Remove(room);
         }
 
         public Room Get(int id)
         {
-            return db.Rooms
+            return _db.Rooms
                 .Include(i => i.RoomCategory)
                 .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Room> GetAll()
         {
-            return db.Rooms
+            return _db.Rooms
                 .Include(i => i.RoomCategory);
         }
     }

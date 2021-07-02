@@ -11,16 +11,16 @@ namespace NixWebApplication.DAL.Repositories
 {
     class PriceToCategoryRepository : IRepository<PriceToCategory>
     {
-        private NixAppContext db;
+        private NixAppContext _db;
 
         public PriceToCategoryRepository(NixAppContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         public void Create(PriceToCategory priceToCategory)
         {
-            db.PricesToCategories.Add(priceToCategory);
+            _db.PricesToCategories.Add(priceToCategory);
         }
 
         public void Delete(int id)
@@ -28,17 +28,17 @@ namespace NixWebApplication.DAL.Repositories
             var priceToCategory = Get(id);
 
             if (priceToCategory != null)
-                db.PricesToCategories.Remove(priceToCategory);
+                _db.PricesToCategories.Remove(priceToCategory);
         }
 
         public PriceToCategory Get(int id)
         {
-            return db.PricesToCategories.Find(id);
+            return _db.PricesToCategories.Find(id);
         }
 
         public IEnumerable<PriceToCategory> GetAll()
         {
-            return db.PricesToCategories;
+            return _db.PricesToCategories;
         }
     }
 }

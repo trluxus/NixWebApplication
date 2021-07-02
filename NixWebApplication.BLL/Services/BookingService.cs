@@ -13,7 +13,7 @@ namespace NixWebApplication.BLL.Services
 {
     public class BookingService : IBookingService
     {
-        private IWorkUnit _database { get; set; }
+        private IWorkUnit _database;
         private readonly IMapper _mapper;
 
         public BookingService(IWorkUnit database, IMapper mapper)
@@ -23,7 +23,7 @@ namespace NixWebApplication.BLL.Services
         }
 
         public void Create(BookingDTO booking)
-        {
+        {           
             _database.Bookings.Create(_mapper.Map<BookingDTO, Booking>(booking));
             _database.Save();
         }

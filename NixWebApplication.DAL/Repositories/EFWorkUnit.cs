@@ -12,26 +12,26 @@ namespace NixWebApplication.DAL.Repositories
 {
     public class EFWorkUnit : IWorkUnit
     {
-        private readonly NixAppContext db;
-        private BookingRepository bookingRepository;
-        private CategoryRepository categoryRepository;
-        private GuestRepository guestRepository;
-        private PriceToCategoryRepository priceToCategoryRepository;
-        private RoomRepository roomRepository;
+        private readonly NixAppContext _db;
+        private BookingRepository _bookingRepository;
+        private CategoryRepository _categoryRepository;
+        private GuestRepository _guestRepository;
+        private PriceToCategoryRepository _priceToCategoryRepository;
+        private RoomRepository _roomRepository;
 
         public EFWorkUnit(NixAppContext dbContext)
         {
-            db = dbContext;
+            _db = dbContext;
         }
 
         public IRepository<Booking> Bookings
         {
             get
             {
-                if (bookingRepository == null)
-                    bookingRepository = new BookingRepository(db);
+                if (_bookingRepository == null)
+                    _bookingRepository = new BookingRepository(_db);
 
-                return bookingRepository;
+                return _bookingRepository;
             }
         }
 
@@ -39,10 +39,10 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (categoryRepository == null)
-                    categoryRepository = new CategoryRepository(db);
+                if (_categoryRepository == null)
+                    _categoryRepository = new CategoryRepository(_db);
 
-                return categoryRepository;
+                return _categoryRepository;
             }
         }
 
@@ -50,10 +50,10 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (guestRepository == null)
-                    guestRepository = new GuestRepository(db);
+                if (_guestRepository == null)
+                    _guestRepository = new GuestRepository(_db);
 
-                return guestRepository;
+                return _guestRepository;
             }
         }
 
@@ -61,10 +61,10 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (priceToCategoryRepository == null)
-                    priceToCategoryRepository = new PriceToCategoryRepository(db);
+                if (_priceToCategoryRepository == null)
+                    _priceToCategoryRepository = new PriceToCategoryRepository(_db);
 
-                return priceToCategoryRepository;
+                return _priceToCategoryRepository;
             }
         }
 
@@ -72,16 +72,16 @@ namespace NixWebApplication.DAL.Repositories
         {
             get
             {
-                if (roomRepository == null)
-                    roomRepository = new RoomRepository(db);
+                if (_roomRepository == null)
+                    _roomRepository = new RoomRepository(_db);
 
-                return roomRepository;
+                return _roomRepository;
             }
         }
 
         public void Save()
         {
-            db.SaveChanges();
+            _db.SaveChanges();
         }
     }
 }

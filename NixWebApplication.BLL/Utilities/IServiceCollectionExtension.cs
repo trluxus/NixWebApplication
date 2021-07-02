@@ -12,11 +12,9 @@ namespace NixWebApplication.BLL.Utilities
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection AddBLLServices(this IServiceCollection services)
+        public static void AddBLLServices(this IServiceCollection services)
         {
             services.AddScoped<IWorkUnit, EFWorkUnit>();
-
-            return services;
         }
     }
 }

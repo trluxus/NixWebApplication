@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.API.Models;
 using NixWebApplication.BLL.DTO;
@@ -15,22 +14,22 @@ namespace NixWebApplication.API.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private IRoomService service;
-        private readonly IMapper mapper;
+        private IRoomService _service;
+        private readonly IMapper _mapper;
 
         public RoomController(IRoomService service, IMapper mapper)
         {
-            this.service = service;
-            this.mapper = mapper;
+            this._service = service;
+            this._mapper = mapper;
         }
 
         // GET: api/<RoomController>
         [HttpGet]
         public ActionResult<RoomModel> Get()
         {
-            var data = service.GetAll();
+            var data = _service.GetAll();
 
-            var rooms = mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
+            var rooms = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
             return Ok(rooms);
         }
 
@@ -40,14 +39,14 @@ namespace NixWebApplication.API.Controllers
         {
             try
             {
-                var data = service.Get(id);
+                var data = _service.Get(id);
 
                 if (data == null)
                     throw new NullReferenceException();
 
                 var room = new RoomModel();
                 
-                room = mapper.Map<RoomDTO, RoomModel>(data);
+                room = _mapper.Map<RoomDTO, RoomModel>(data);
 
 
                 return Ok(room);
@@ -62,7 +61,7 @@ namespace NixWebApplication.API.Controllers
         [HttpPost]
         public ActionResult<RoomModel> Build(RoomModel room)
         {
-            service.Create(mapper.Map<RoomModel, RoomDTO>(room));
+            _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
 
             return Ok(room);
         }
@@ -71,9 +70,9 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("empty/{startDate}/{endDate}"), Route("empty")]
         public ActionResult<RoomModel> FindEmpty(string startDate, string endDate)
         {
-            var data = service.FindEmpty(DateTime.Parse(startDate), DateTime.Parse(endDate));
+            var data = _service.FindEmpty(DateTime.Parse(startDate), DateTime.Parse(endDate));
 
-            var res = mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
+            var res = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
 
             return Ok(res);
         }

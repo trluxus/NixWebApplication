@@ -11,16 +11,16 @@ namespace NixWebApplication.DAL.Repositories
 {
     class CategoryRepository : IRepository<Category>
     {
-        private NixAppContext db;
+        private NixAppContext _db;
 
         public CategoryRepository(NixAppContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         public void Create(Category category)
         {
-            db.Categories.Add(category);
+            _db.Categories.Add(category);
         }
 
         public void Delete(int id)
@@ -28,17 +28,17 @@ namespace NixWebApplication.DAL.Repositories
             var category = Get(id);
 
             if (category != null)
-                db.Categories.Remove(category);
+                _db.Categories.Remove(category);
         }
 
         public Category Get(int id)
         {
-            return db.Categories.Find(id);
+            return _db.Categories.Find(id);
         }
 
         public IEnumerable<Category> GetAll()
         {
-            return db.Categories;
+            return _db.Categories;
         }
     }
 }

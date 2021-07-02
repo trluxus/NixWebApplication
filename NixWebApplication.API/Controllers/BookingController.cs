@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.API.Models;
 using NixWebApplication.BLL.DTO;
@@ -15,22 +14,22 @@ namespace NixWebApplication.API.Controllers
     [ApiController]
     public class BookingController : ControllerBase
     {
-        private IBookingService service;
-        private readonly IMapper mapper;
+        private IBookingService _service;
+        private readonly IMapper _mapper;
 
         public BookingController(IBookingService service, IMapper mapper)
         {
-            this.service = service;
-            this.mapper = mapper;
+            this._service = service;
+            this._mapper = mapper;
         }
 
         // GET: api/<BookingController>
         [HttpGet]
         public ActionResult<BookingModel> Get()
         {
-            var data = service.GetAll();
+            var data = _service.GetAll();
 
-            var bookings = mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
+            var bookings = _mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
             return Ok(bookings);
         }
 
@@ -40,14 +39,14 @@ namespace NixWebApplication.API.Controllers
         {
             try
             {
-                var data = service.Get(id);
+                var data = _service.Get(id);
 
                 if (data == null)
                     throw new NullReferenceException();
 
                 var booking = new BookingModel();
                 
-                booking = mapper.Map<BookingDTO, BookingModel>(data);
+                booking = _mapper.Map<BookingDTO, BookingModel>(data);
 
                 return Ok(booking);
             }
@@ -59,9 +58,9 @@ namespace NixWebApplication.API.Controllers
 
         // POST api/<BookingController>
         [HttpPost]
-        public ActionResult<BookingModel> Build(BookingModel booking)
+        public ActionResult<BookingModel> Book(BookingModel booking)
         {
-            service.Create(mapper.Map<BookingModel, BookingDTO>(booking));
+            _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
 
             return Ok(booking);
         }
@@ -70,7 +69,7 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("income/{date}"), Route("income")]
         public ActionResult<RoomModel> Income(string date)
         {
-            var res = service.Income(DateTime.Parse(date));
+            var res = _service.Income(DateTime.Parse(date));
 
             return Ok(res);
         }

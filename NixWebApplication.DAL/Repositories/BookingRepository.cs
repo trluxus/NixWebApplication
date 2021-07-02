@@ -21,6 +21,8 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(Booking booking)
         {
+            db.Attach(booking.BookingGuest);
+            db.Attach(booking.BookingRoom);
             db.Bookings.Add(booking);
         }
 
