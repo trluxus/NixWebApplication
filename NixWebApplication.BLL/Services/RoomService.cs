@@ -13,7 +13,7 @@ namespace NixWebApplication.BLL.Services
 {
     public class RoomService : IRoomService
     {
-        private IWorkUnit _database;
+        private readonly IWorkUnit _database;
         private readonly IMapper _mapper;
 
         public RoomService(IWorkUnit database, IMapper mapper)

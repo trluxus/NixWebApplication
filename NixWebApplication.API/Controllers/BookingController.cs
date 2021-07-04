@@ -14,7 +14,7 @@ namespace NixWebApplication.API.Controllers
     [ApiController]
     public class BookingController : ControllerBase
     {
-        private IBookingService _service;
+        private readonly IBookingService _service;
         private readonly IMapper _mapper;
 
         public BookingController(IBookingService service, IMapper mapper)

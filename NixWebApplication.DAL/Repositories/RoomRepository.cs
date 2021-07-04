@@ -12,7 +12,7 @@ namespace NixWebApplication.DAL.Repositories
 {
     class RoomRepository : IRepository<Room>
     {
-        private NixAppContext _db;
+        private readonly NixAppContext _db;
 
         public RoomRepository(NixAppContext db)
         {

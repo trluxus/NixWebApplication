@@ -14,7 +14,7 @@ namespace NixWebApplication.API.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private IRoomService _service;
+        private readonly IRoomService _service;
         private readonly IMapper _mapper;
 
         public RoomController(IRoomService service, IMapper mapper)

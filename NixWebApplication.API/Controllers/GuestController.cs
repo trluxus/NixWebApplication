@@ -16,7 +16,7 @@ namespace NixWebApplication.API.Controllers
     [ApiController]
     public class GuestController : ControllerBase
     {
-        private IGuestService _service;
+        private readonly IGuestService _service;
         private readonly IMapper _mapper;
 
         public GuestController(IGuestService service, IMapper mapper)

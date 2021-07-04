@@ -11,7 +11,7 @@ namespace NixWebApplication.DAL.Repositories
 {
     class PriceToCategoryRepository : IRepository<PriceToCategory>
     {
-        private NixAppContext _db;
+        private readonly NixAppContext _db;
 
         public PriceToCategoryRepository(NixAppContext db)
         {

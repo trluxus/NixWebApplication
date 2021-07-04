@@ -12,7 +12,7 @@ namespace NixWebApplication.DAL.Repositories
 {
     class BookingRepository : IRepository<Booking>
     {
-        private NixAppContext db;
+        private readonly NixAppContext db;
 
         public BookingRepository(NixAppContext db)
         {

@@ -13,7 +13,7 @@ namespace NixWebApplication.BLL.Services
 {
     public class BookingService : IBookingService
     {
-        private IWorkUnit _database;
+        private readonly IWorkUnit _database;
         private readonly IMapper _mapper;
 
         public BookingService(IWorkUnit database, IMapper mapper)
