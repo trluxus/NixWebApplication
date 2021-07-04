@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.API.Mappers
 {
-    public class BookingControllerMapperProfile : Profile
+    public class BookingDTOMapperProfile : Profile
     {
-        public BookingControllerMapperProfile()
+        public BookingDTOMapperProfile()
         {
             CreateMap<RoomDTO, RoomModel>()
                 .ReverseMap();
-            CreateMap<GuestDTO, GuestModel>()
-                .ReverseMap();
             CreateMap<BookingDTO, BookingModel>()
+                .ForMember(i => i.Id, i => i.MapFrom(j => j.Id))
                 .ForMember(i => i.BookingGuest, i => i.MapFrom(j => j.BookingGuest))
                 .ForMember(i => i.BookingRoom, i => i.MapFrom(j => j.BookingRoom))
+                .ForMember(i => i.BookingDate, i => i.MapFrom(j => j.BookingDate))
+                .ForMember(i => i.EnterDate, i => i.MapFrom(j => j.EnterDate))
+                .ForMember(i => i.LeaveDate, i => i.MapFrom(j => j.LeaveDate))
                 .ReverseMap();
         }
     }

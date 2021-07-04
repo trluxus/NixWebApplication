@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Mappers
 {
-    class RoomServiceMapperProfile : Profile
+    class RoomMapperProfile : Profile
     {
-        public RoomServiceMapperProfile()
+        public RoomMapperProfile()
         {
-            CreateMap<Category, CategoryDTO>()
-                .ReverseMap(); ;
             CreateMap<Room, RoomDTO>()
+                .ForMember(i => i.Id, i => i.MapFrom(j => j.Id))
+                .ForMember(i => i.Name, i => i.MapFrom(j => j.Name))
                 .ForMember(i => i.RoomCategory, i => i.MapFrom(j => j.RoomCategory))
+                .ForMember(i => i.IsActive, i => i.MapFrom(j => j.IsActive))
                 .ReverseMap();
         }
     }
