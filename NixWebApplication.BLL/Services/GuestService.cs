@@ -28,6 +28,12 @@ namespace NixWebApplication.BLL.Services
             _database.Save();
         }
 
+        public void Delete(int id)
+        {
+            _database.Guests.Delete(id);
+            _database.Save();
+        }
+
         public GuestDTO Get(int id)
         {
             var guest = _database.Guests.Get(id);

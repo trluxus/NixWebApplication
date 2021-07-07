@@ -23,14 +23,20 @@ namespace NixWebApplication.API.Controllers
             this._mapper = mapper;
         }
 
-        // GET: api/<BookingController>
-        [HttpGet]
-        public ActionResult<BookingModel> Get()
+        // POST api/<BookingController>
+        [HttpPost]
+        public ActionResult<BookingModel> Create(BookingModel booking)
         {
-            var data = _service.GetAll();
+            _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
 
-            var bookings = _mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
-            return Ok(bookings);
+            return Ok(booking);
+        }
+
+        // DELETE api/<BookingController>
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
         }
 
         // GET api/<BookingController>/5
@@ -45,7 +51,7 @@ namespace NixWebApplication.API.Controllers
                     throw new NullReferenceException();
 
                 var booking = new BookingModel();
-                
+
                 booking = _mapper.Map<BookingDTO, BookingModel>(data);
 
                 return Ok(booking);
@@ -56,16 +62,17 @@ namespace NixWebApplication.API.Controllers
             }
         }
 
-        // POST api/<BookingController>
-        [HttpPost]
-        public ActionResult<BookingModel> Book(BookingModel booking)
+        // GET: api/<BookingController>
+        [HttpGet]
+        public ActionResult<BookingModel> GetAll()
         {
-            _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
+            var data = _service.GetAll();
 
-            return Ok(booking);
+            var bookings = _mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
+            return Ok(bookings);
         }
 
-        // Get api/<BookingController>/
+        // GET: api/<BookingController>/income/2020-01-20
         [HttpGet("income/{date}"), Route("income")]
         public ActionResult<RoomModel> Income(string date)
         {

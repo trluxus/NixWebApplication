@@ -9,9 +9,10 @@ namespace NixWebApplication.BLL.Interfaces
 {
     public interface IRoomService
     {
-        IEnumerable<RoomDTO> GetAll();
-        RoomDTO Get(int id);
         void Create(RoomDTO room);
+        void Delete(int id);
         IEnumerable<RoomDTO> FindEmpty(DateTime enterDate, DateTime leaveDate);
+        RoomDTO Get(int id);
+        IEnumerable<RoomDTO> GetAll();      
     }
 }

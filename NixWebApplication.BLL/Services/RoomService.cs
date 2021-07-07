@@ -28,16 +28,10 @@ namespace NixWebApplication.BLL.Services
             _database.Save();
         }
 
-        public RoomDTO Get(int id)
+        public void Delete(int id)
         {
-            var room = _database.Rooms.Get(id);
-
-            return _mapper.Map<Room, RoomDTO>(room);
-        }
-
-        public IEnumerable<RoomDTO> GetAll()
-        {
-            return _mapper.Map<IEnumerable<Room>, List<RoomDTO>>(_database.Rooms.GetAll());
+            _database.Rooms.Delete(id);
+            _database.Save();
         }
 
         public IEnumerable<RoomDTO> FindEmpty(DateTime enterDate, DateTime leaveDate)
@@ -50,6 +44,18 @@ namespace NixWebApplication.BLL.Services
             var res = _database.Rooms.GetAll().Where(i => empty.Contains(i.Id) && i.IsActive);
 
             return _mapper.Map<IEnumerable<Room>, List<RoomDTO>>(res);
+        }
+
+        public RoomDTO Get(int id)
+        {
+            var room = _database.Rooms.Get(id);
+
+            return _mapper.Map<Room, RoomDTO>(room);
+        }
+
+        public IEnumerable<RoomDTO> GetAll()
+        {
+            return _mapper.Map<IEnumerable<Room>, List<RoomDTO>>(_database.Rooms.GetAll());
         }
     }
 }

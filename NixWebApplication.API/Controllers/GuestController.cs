@@ -25,14 +25,20 @@ namespace NixWebApplication.API.Controllers
             this._mapper = mapper;
         }
 
-        // GET: api/<GuestController>
-        [HttpGet]
-        public ActionResult<GuestModel> Get()
+        // POST api/<GuestController>
+        [HttpPost]
+        public ActionResult<GuestModel> Create(GuestModel guest)
         {
-            var data = _service.GetAll();
-            var guests = _mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data);
+            _service.Create(_mapper.Map<GuestModel, GuestDTO>(guest));
 
-            return Ok(guests);
+            return Ok(guest);
+        }
+
+        // DELETE api/<GuestController>
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
         }
 
         // GET api/<GuestController>/5
@@ -56,13 +62,14 @@ namespace NixWebApplication.API.Controllers
             }
         }
 
-        // POST api/<GuestController>
-        [HttpPost]
-        public ActionResult<GuestModel> Register(GuestModel guest)
+        // GET: api/<GuestController>
+        [HttpGet]
+        public ActionResult<GuestModel> GetAll()
         {
-            _service.Create(_mapper.Map<GuestModel, GuestDTO>(guest));
+            var data = _service.GetAll();
+            var guests = _mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data);
 
-            return Ok(guest);
+            return Ok(guests);
         }
     }
 }

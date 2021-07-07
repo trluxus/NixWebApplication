@@ -23,14 +23,20 @@ namespace NixWebApplication.API.Controllers
             this._mapper = mapper;
         }
 
-        // GET: api/<RoomController>
-        [HttpGet]
-        public ActionResult<RoomModel> Get()
+        // POST api/<RoomController>
+        [HttpPost]
+        public ActionResult<RoomModel> Create(RoomModel room)
         {
-            var data = _service.GetAll();
+            _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
 
-            var rooms = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
-            return Ok(rooms);
+            return Ok(room);
+        }
+
+        // DELETE api/<RoomController>
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
         }
 
         // GET api/<RoomController>/5
@@ -45,7 +51,7 @@ namespace NixWebApplication.API.Controllers
                     throw new NullReferenceException();
 
                 var room = new RoomModel();
-                
+
                 room = _mapper.Map<RoomDTO, RoomModel>(data);
 
 
@@ -57,16 +63,17 @@ namespace NixWebApplication.API.Controllers
             }
         }
 
-        // POST api/<RoomController>
-        [HttpPost]
-        public ActionResult<RoomModel> Build(RoomModel room)
+        // GET: api/<RoomController>
+        [HttpGet]
+        public ActionResult<RoomModel> GetAll()
         {
-            _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
+            var data = _service.GetAll();
 
-            return Ok(room);
+            var rooms = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
+            return Ok(rooms);
         }
 
-        // Get api/<RoomController>/
+        // GET: api/<RoomController>/empty/2020-01-20/2020-03-16
         [HttpGet("empty/{startDate}/{endDate}"), Route("empty")]
         public ActionResult<RoomModel> FindEmpty(string startDate, string endDate)
         {

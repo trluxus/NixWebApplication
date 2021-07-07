@@ -9,9 +9,10 @@ namespace NixWebApplication.BLL.Interfaces
 {
     public interface IBookingService
     {
-        IEnumerable<BookingDTO> GetAll();
-        BookingDTO Get(int id);
         void Create(BookingDTO booking);
+        void Delete(int id);
+        BookingDTO Get(int id);
+        IEnumerable<BookingDTO> GetAll();    
         decimal Income(DateTime date);
     }
 }
