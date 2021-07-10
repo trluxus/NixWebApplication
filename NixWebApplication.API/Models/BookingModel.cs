@@ -13,5 +13,16 @@ namespace NixWebApplication.API.Models
         public DateTime BookingDate { get; set; }
         public DateTime EnterDate { get; set; }
         public DateTime LeaveDate { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is BookingModel model &&
+                   Id == model.Id &&
+                   EqualityComparer<GuestModel>.Default.Equals(BookingGuest, model.BookingGuest) &&
+                   EqualityComparer<RoomModel>.Default.Equals(BookingRoom, model.BookingRoom) &&
+                   BookingDate == model.BookingDate &&
+                   EnterDate == model.EnterDate &&
+                   LeaveDate == model.LeaveDate;
+        }
     }
 }

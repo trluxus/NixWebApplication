@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.BLL", "Ni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.DAL", "NixWebApplication.DAL\NixWebApplication.DAL.csproj", "{57657F9F-7122-4D91-9E71-60F0C27130C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.Tests", "NixWebApplication.Tests\NixWebApplication.Tests.csproj", "{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{57657F9F-7122-4D91-9E71-60F0C27130C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57657F9F-7122-4D91-9E71-60F0C27130C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57657F9F-7122-4D91-9E71-60F0C27130C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

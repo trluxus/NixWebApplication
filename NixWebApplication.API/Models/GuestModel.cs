@@ -13,5 +13,16 @@ namespace NixWebApplication.API.Models
         public string Patronymic { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Address { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GuestModel model &&
+                   Id == model.Id &&
+                   Name == model.Name &&
+                   Surname == model.Surname &&
+                   Patronymic == model.Patronymic &&
+                   BirthDate == model.BirthDate &&
+                   Address == model.Address;
+        }
     }
 }
