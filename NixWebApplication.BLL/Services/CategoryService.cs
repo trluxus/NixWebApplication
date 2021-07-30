@@ -45,5 +45,10 @@ namespace NixWebApplication.BLL.Services
         {
             return _mapper.Map<IEnumerable<Category>, List<CategoryDTO>>(_database.Categories.GetAll());
         }
+
+        public void Update(CategoryDTO item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

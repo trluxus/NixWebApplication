@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Interfaces
 {
-    public interface ICategoryService : IBaseService<CategoryDTO>
+    public interface ICategoryService : IRestService<CategoryDTO>
     {
     }
 }

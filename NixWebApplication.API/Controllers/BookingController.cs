@@ -59,7 +59,7 @@ namespace NixWebApplication.API.Controllers
 
         // POST api/<BookingController>
         [HttpPost]
-        public void Post(BookingModel booking)
+        public void Post([FromBody] BookingModel booking)
         {
             _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
         }

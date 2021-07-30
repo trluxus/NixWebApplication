@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Interfaces
 {
-    public interface IBookingService : IBaseService<BookingDTO>
+    public interface IBookingService : IRestService<BookingDTO>
     {
         decimal Income(DateTime date);
     }

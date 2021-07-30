@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Interfaces
 {
-    public interface IRoomService : IBaseService<RoomDTO>
+    public interface IRoomService : IRestService<RoomDTO>
     {
         IEnumerable<RoomDTO> FindEmpty(DateTime enterDate, DateTime leaveDate);    
     }

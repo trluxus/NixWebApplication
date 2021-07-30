@@ -66,5 +66,10 @@ namespace NixWebApplication.BLL.Services
             return _database.PricesToCategories.GetAll().Where(i => i.StartDate <= date && date <= i.EndDate).
                 Where(i => categoriesForIncome.Contains(i.CategoryId)).Select(i => i.Price).Sum();
         }
+
+        public void Update(BookingDTO item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

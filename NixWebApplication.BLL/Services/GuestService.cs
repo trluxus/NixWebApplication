@@ -45,5 +45,10 @@ namespace NixWebApplication.BLL.Services
         {
             return _mapper.Map<IEnumerable<Guest>, List<GuestDTO>>(_database.Guests.GetAll());
         }
+
+        public void Update(GuestDTO item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
