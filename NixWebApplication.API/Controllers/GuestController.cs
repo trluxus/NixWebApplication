@@ -37,19 +37,8 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("{id}")]
         public GuestModel Get(int id)
         {
-            try
-            {
-                var data = _service.Get(id);
-
-                if (data == null)
-                    throw new NullReferenceException();
-
-                return _mapper.Map<GuestDTO, GuestModel>(data);;
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
+            var data = _service.Get(id);
+            return _mapper.Map<GuestDTO, GuestModel>(data);
         }
 
         // POST api/<GuestController>
@@ -61,7 +50,7 @@ namespace NixWebApplication.API.Controllers
 
         // PUT api/<GuestController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] GuestModel guest)
         {
         }
 

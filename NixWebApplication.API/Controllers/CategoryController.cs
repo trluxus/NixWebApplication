@@ -37,19 +37,8 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("{id}")]
         public CategoryModel Get(int id)
         {
-            try
-            {
-                var data = _service.Get(id);
-
-                if (data == null)
-                    throw new NullReferenceException();
-
-                return _mapper.Map<CategoryDTO, CategoryModel>(data);
-            }
-            catch (NullReferenceException)
-            {
-                return null;
-            }
+            var data = _service.Get(id);
+            return _mapper.Map<CategoryDTO, CategoryModel>(data);
         }
 
         // POST api/<CategoryController>

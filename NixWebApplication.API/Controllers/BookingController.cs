@@ -35,19 +35,8 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("{id}")]
         public BookingModel Get(int id)
         {
-            try
-            {
-                var data = _service.Get(id);
-
-                if (data == null)
-                    throw new NullReferenceException();
-
-                return _mapper.Map<BookingDTO, BookingModel>(data);
-            }
-            catch (NullReferenceException ex)
-            {
-                return null;
-            }
+            var data = _service.Get(id);
+            return _mapper.Map<BookingDTO, BookingModel>(data);
         }
 
         // GET: api/<BookingController>/income/2020-01-20

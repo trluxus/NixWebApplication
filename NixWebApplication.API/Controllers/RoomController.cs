@@ -35,19 +35,8 @@ namespace NixWebApplication.API.Controllers
         [HttpGet("{id}")]
         public RoomModel Get(int id)
         {
-            try
-            {
-                var data = _service.Get(id);
-
-                if (data == null)
-                    throw new NullReferenceException();
-
-                return _mapper.Map<RoomDTO, RoomModel>(data);
-            }
-            catch (NullReferenceException ex)
-            {
-                return null;
-            }
+            var data = _service.Get(id);
+            return _mapper.Map<RoomDTO, RoomModel>(data);
         }
 
         // GET: api/<RoomController>/empty/2020-01-20/2020-03-16
