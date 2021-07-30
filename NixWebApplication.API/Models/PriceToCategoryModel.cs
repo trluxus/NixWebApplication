@@ -12,5 +12,15 @@ namespace NixWebApplication.API.Models
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PriceToCategoryModel model &&
+                   Id == model.Id &&
+                   EqualityComparer<CategoryModel>.Default.Equals(PriceCategory, model.PriceCategory) &&
+                   Price == model.Price &&
+                   StartDate == model.StartDate &&
+                   EndDate == model.EndDate;
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace NixWebApplication.BLL.Services
 
         public void Create(CategoryDTO item)
         {
-            _database.Categories.Create(_mapper.Map<CategoryDTO, Category>(category));
+            _database.Categories.Create(_mapper.Map<CategoryDTO, Category>(item));
             _database.Save();
         }
 
