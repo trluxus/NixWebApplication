@@ -10,5 +10,13 @@ namespace NixWebApplication.API.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Beds { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CategoryModel model &&
+                   Id == model.Id &&
+                   Name == model.Name &&
+                   Beds == model.Beds;
+        }
     }
 }

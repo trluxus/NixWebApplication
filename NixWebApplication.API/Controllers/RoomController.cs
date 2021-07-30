@@ -23,25 +23,17 @@ namespace NixWebApplication.API.Controllers
             this._mapper = mapper;
         }
 
-        // POST api/<RoomController>
-        [HttpPost]
-        public ActionResult<RoomModel> Create(RoomModel room)
+        // GET: api/<RoomController>
+        [HttpGet]
+        public IEnumerable<RoomModel> Get()
         {
-            _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
-
-            return Ok(room);
-        }
-
-        // DELETE api/<RoomController>
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            _service.Delete(id);
+            var data = _service.GetAll();
+            return _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
         }
 
         // GET api/<RoomController>/5
         [HttpGet("{id}")]
-        public ActionResult<RoomModel> Get(int id)
+        public RoomModel Get(int id)
         {
             try
             {
@@ -50,38 +42,40 @@ namespace NixWebApplication.API.Controllers
                 if (data == null)
                     throw new NullReferenceException();
 
-                var room = new RoomModel();
-
-                room = _mapper.Map<RoomDTO, RoomModel>(data);
-
-
-                return Ok(room);
+                return _mapper.Map<RoomDTO, RoomModel>(data);
             }
             catch (NullReferenceException ex)
             {
-                return NotFound();
+                return null;
             }
-        }
-
-        // GET: api/<RoomController>
-        [HttpGet]
-        public ActionResult<RoomModel> GetAll()
-        {
-            var data = _service.GetAll();
-
-            var rooms = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
-            return Ok(rooms);
         }
 
         // GET: api/<RoomController>/empty/2020-01-20/2020-03-16
         [HttpGet("empty/{startDate}/{endDate}"), Route("empty")]
-        public ActionResult<RoomModel> FindEmpty(string startDate, string endDate)
+        public IEnumerable<RoomModel> FindEmpty(string startDate, string endDate)
         {
             var data = _service.FindEmpty(DateTime.Parse(startDate), DateTime.Parse(endDate));
-
-            var res = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
-
-            return Ok(res);
+            return _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(data);
         }
+
+        // POST api/<RoomController>
+        [HttpPost]
+        public void Post(RoomModel room)
+        {
+            _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
+        }
+
+        // PUT api/<RoomController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<RoomController>
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
+        }        
     }
 }

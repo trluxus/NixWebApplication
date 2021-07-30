@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Interfaces
 {
-    public interface IBookingService
+    public interface IBookingService : IBaseService<BookingDTO>
     {
-        void Create(BookingDTO booking);
-        void Delete(int id);
-        BookingDTO Get(int id);
-        IEnumerable<BookingDTO> GetAll();    
         decimal Income(DateTime date);
     }
 }

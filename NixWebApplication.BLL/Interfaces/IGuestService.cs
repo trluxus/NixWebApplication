@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.BLL.Interfaces
 {
-    public interface IGuestService
+    public interface IGuestService : IBaseService<GuestDTO>
     {    
-        void Create(GuestDTO guest);
-        void Delete(int id);
-        IEnumerable<GuestDTO> GetAll();
-        GuestDTO Get(int id);
     }
 }

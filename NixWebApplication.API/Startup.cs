@@ -38,10 +38,12 @@ namespace NixWebApplication.API
             services.AddBLLServices();
 
             services.AddAutoMapper(typeof(BookingService), typeof(BookingController));
+            services.AddAutoMapper(typeof(CategoryService), typeof(CategoryController));
             services.AddAutoMapper(typeof(GuestService), typeof(GuestController));
             services.AddAutoMapper(typeof(RoomService), typeof(RoomController));         
 
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGuestService, GuestService>(); 
             services.AddScoped<IRoomService, RoomService>();
 

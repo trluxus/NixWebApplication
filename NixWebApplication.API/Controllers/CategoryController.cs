@@ -14,28 +14,28 @@ namespace NixWebApplication.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GuestController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly IGuestService _service;
+        private readonly ICategoryService _service;
         private readonly IMapper _mapper;
 
-        public GuestController(IGuestService service, IMapper mapper)
+        public CategoryController(ICategoryService service, IMapper mapper)
         {
             this._service = service;
             this._mapper = mapper;
         }
 
-        // GET: api/<GuestController>
+        // GET: api/<CategoryController>
         [HttpGet]
-        public IEnumerable<GuestModel> Get()
+        public IEnumerable<CategoryModel> Get()
         {
             var data = _service.GetAll();
-            return _mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data);
+            return _mapper.Map<IEnumerable<CategoryDTO>, List<CategoryModel>>(data);
         }
 
-        // GET api/<GuestController>/5
+        // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public GuestModel Get(int id)
+        public CategoryModel Get(int id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace NixWebApplication.API.Controllers
                 if (data == null)
                     throw new NullReferenceException();
 
-                return _mapper.Map<GuestDTO, GuestModel>(data);;
+                return _mapper.Map<CategoryDTO, CategoryModel>(data);
             }
             catch (NullReferenceException)
             {
@@ -52,20 +52,20 @@ namespace NixWebApplication.API.Controllers
             }
         }
 
-        // POST api/<GuestController>
+        // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] GuestModel guest)
+        public void Post([FromBody] CategoryModel category)
         {
-            _service.Create(_mapper.Map<GuestModel, GuestDTO>(guest));
+            _service.Create(_mapper.Map<CategoryModel, CategoryDTO>(category));
         }
 
-        // PUT api/<GuestController>/5
+        // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<GuestController>/5
+        // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

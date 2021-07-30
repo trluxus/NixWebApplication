@@ -23,25 +23,17 @@ namespace NixWebApplication.API.Controllers
             this._mapper = mapper;
         }
 
-        // POST api/<BookingController>
-        [HttpPost]
-        public ActionResult<BookingModel> Create(BookingModel booking)
+        // GET: api/<BookingController>
+        [HttpGet]
+        public IEnumerable<BookingModel> Get()
         {
-            _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
-
-            return Ok(booking);
-        }
-
-        // DELETE api/<BookingController>
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            _service.Delete(id);
+            var data = _service.GetAll();
+            return _mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
         }
 
         // GET api/<BookingController>/5
         [HttpGet("{id}")]
-        public ActionResult<BookingModel> Get(int id)
+        public BookingModel Get(int id)
         {
             try
             {
@@ -50,35 +42,39 @@ namespace NixWebApplication.API.Controllers
                 if (data == null)
                     throw new NullReferenceException();
 
-                var booking = new BookingModel();
-
-                booking = _mapper.Map<BookingDTO, BookingModel>(data);
-
-                return Ok(booking);
+                return _mapper.Map<BookingDTO, BookingModel>(data);
             }
             catch (NullReferenceException ex)
             {
-                return NotFound();
+                return null;
             }
-        }
-
-        // GET: api/<BookingController>
-        [HttpGet]
-        public ActionResult<BookingModel> GetAll()
-        {
-            var data = _service.GetAll();
-
-            var bookings = _mapper.Map<IEnumerable<BookingDTO>, List<BookingModel>>(data);
-            return Ok(bookings);
         }
 
         // GET: api/<BookingController>/income/2020-01-20
         [HttpGet("income/{date}"), Route("income")]
-        public ActionResult<RoomModel> Income(string date)
+        public decimal Income(string date)
         {
-            var res = _service.Income(DateTime.Parse(date));
+            return _service.Income(DateTime.Parse(date));
+        }
 
-            return Ok(res);
+        // POST api/<BookingController>
+        [HttpPost]
+        public void Post(BookingModel booking)
+        {
+            _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
+        }
+
+        // PUT api/<BookingController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<BookingController>
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _service.Delete(id);
         }
     }
 }

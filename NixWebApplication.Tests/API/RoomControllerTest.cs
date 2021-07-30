@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NixWebApplication.Tests
+namespace NixWebApplication.Tests.API
 {
     [TestFixture]
     class RoomControllerTest
@@ -33,38 +33,28 @@ namespace NixWebApplication.Tests
             _roomController = new RoomController(_mock.Object, _mapper);
         }
 
-        [TestCase(1)]
-        public void Get(int id)
-        {
-            _mock.Setup(a => a.Get(id)).Returns(new RoomDTO());
-
-            var expected = _mapper.Map<RoomDTO, RoomModel>(_mock.Object.Get(id));
-
-            var actionResult = _roomController.Get(id).Result;
-
-            Assert.IsInstanceOf(typeof(OkObjectResult), actionResult);
-
-            var result = actionResult as OkObjectResult;
-
-            Assert.IsInstanceOf(typeof(RoomModel), result.Value);
-            Assert.AreEqual(expected, result.Value);
-        }
-
         [Test]
         public void GetAll()
         {
             _mock.Setup(a => a.GetAll()).Returns(new List<RoomDTO>());
 
             var expected = _mapper.Map<IEnumerable<RoomDTO>, List<RoomModel>>(_mock.Object.GetAll());
+            var result = _roomController.Get();
 
-            var actionResult = _roomController.GetAll().Result;
+            Assert.IsInstanceOf(typeof(IEnumerable<RoomModel>), result);
+            Assert.AreEqual(expected, result);
+        }
 
-            Assert.IsInstanceOf(typeof(OkObjectResult), actionResult);
+        [TestCase(1)]
+        public void Get(int id)
+        {
+            _mock.Setup(a => a.Get(id)).Returns(new RoomDTO() { Id = id });
 
-            var result = actionResult as OkObjectResult;
+            var expected = _mapper.Map<RoomDTO, RoomModel>(_mock.Object.Get(id));
+            var result = _roomController.Get(id);
 
-            Assert.IsInstanceOf(typeof(IEnumerable<RoomModel>), result.Value);
-            Assert.AreEqual(expected, result.Value);
+            Assert.IsInstanceOf(typeof(RoomModel), result);
+            Assert.AreEqual(expected, result);
         }
     }
 }
