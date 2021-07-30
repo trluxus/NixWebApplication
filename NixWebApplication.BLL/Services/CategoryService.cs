@@ -22,7 +22,7 @@ namespace NixWebApplication.BLL.Services
             this._mapper = mapper;
         }
 
-        public void Create(CategoryDTO category)
+        public void Create(CategoryDTO item)
         {
             _database.Categories.Create(_mapper.Map<CategoryDTO, Category>(category));
             _database.Save();

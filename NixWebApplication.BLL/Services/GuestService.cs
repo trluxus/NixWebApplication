@@ -22,9 +22,9 @@ namespace NixWebApplication.BLL.Services
             this._mapper = mapper;
         }
 
-        public void Create(GuestDTO guest)
+        public void Create(GuestDTO item)
         {
-            _database.Guests.Create(_mapper.Map<GuestDTO, Guest>(guest));
+            _database.Guests.Create(_mapper.Map<GuestDTO, Guest>(item));
             _database.Save();
         }
 
