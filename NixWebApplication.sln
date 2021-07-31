@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.WEB", "NixWebApplication.WEB\NixWebApplication.WEB.csproj", "{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.Models", "NixWebApplication.Models\NixWebApplication.Models.csproj", "{0C6C6278-F77E-4A72-B46A-0A596535D64A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.Models", "NixWebApplication.Models\NixWebApplication.Models.csproj", "{0C6C6278-F77E-4A72-B46A-0A596535D64A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplications.Mapper", "NixWebApplications.Mapper\NixWebApplications.Mapper.csproj", "{DB84263C-E6F7-4715-915D-C1A381B7DC92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplications.Mapper", "NixWebApplications.Mapper\NixWebApplications.Mapper.csproj", "{DB84263C-E6F7-4715-915D-C1A381B7DC92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

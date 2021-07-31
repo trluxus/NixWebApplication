@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Moq;
 using NixWebApplication.API.Controllers;
-using NixWebApplication.API.Models;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
+using NixWebApplication.Models;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
