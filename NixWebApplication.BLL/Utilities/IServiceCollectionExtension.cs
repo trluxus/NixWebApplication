@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NixWebApplication.BLL.Mappers;
 using NixWebApplication.BLL.Services;
 using NixWebApplication.DAL.Interfaces;
 using NixWebApplication.DAL.Repositories;
@@ -15,6 +16,12 @@ namespace NixWebApplication.BLL.Utilities
         public static void AddBLLServices(this IServiceCollection services)
         {
             services.AddScoped<IWorkUnit, EFWorkUnit>();
+
+            services.AddAutoMapper(typeof(BookingMapperProfile));
+            services.AddAutoMapper(typeof(CategoryMapperProfile));
+            services.AddAutoMapper(typeof(GuestMapperProfile));
+            services.AddAutoMapper(typeof(PriceToCategoryMapperProfile));
+            services.AddAutoMapper(typeof(RoomMapperProfile));
         }
     }
 }

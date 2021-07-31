@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NixWebApplication.DAL.Repositories;
 using NixWebApplication.API.Controllers;
+using NixWebApplication.Mapper.Utilities;
 
 namespace NixWebApplication.API
 {
@@ -33,18 +34,16 @@ namespace NixWebApplication.API
         {
             services.AddDbContext<NixAppContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
-                b => b.MigrationsAssembly("NixWebApplication.API")));
+                b => b.MigrationsAssembly("NixWebApplication.DAL")));
 
             services.AddBLLServices();
 
-            services.AddAutoMapper(typeof(BookingService), typeof(BookingController));
-            services.AddAutoMapper(typeof(CategoryService), typeof(CategoryController));
-            services.AddAutoMapper(typeof(GuestService), typeof(GuestController));
-            services.AddAutoMapper(typeof(RoomService), typeof(RoomController));         
+            services.AddClientMapperConfigurations();      
 
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGuestService, GuestService>(); 
+            services.AddScoped<IPriceToCategoryService, PriceToCategoryService>(); 
             services.AddScoped<IRoomService, RoomService>();
 
             services.AddControllers();

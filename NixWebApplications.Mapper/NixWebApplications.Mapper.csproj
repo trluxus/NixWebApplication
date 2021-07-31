@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NixWebApplication.BLL\NixWebApplication.BLL.csproj" />
+    <ProjectReference Include="..\NixWebApplication.Models\NixWebApplication.Models.csproj" />
+  </ItemGroup>
+
+</Project>

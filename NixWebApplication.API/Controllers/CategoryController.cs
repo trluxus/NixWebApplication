@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NixWebApplication.API.Models;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
+using NixWebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

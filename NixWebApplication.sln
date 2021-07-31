@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.BLL", "Ni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.DAL", "NixWebApplication.DAL\NixWebApplication.DAL.csproj", "{57657F9F-7122-4D91-9E71-60F0C27130C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.Tests", "NixWebApplication.Tests\NixWebApplication.Tests.csproj", "{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.Tests", "NixWebApplication.Tests\NixWebApplication.Tests.csproj", "{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.WEB", "NixWebApplication.WEB\NixWebApplication.WEB.csproj", "{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.Models", "NixWebApplication.Models\NixWebApplication.Models.csproj", "{0C6C6278-F77E-4A72-B46A-0A596535D64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplications.Mapper", "NixWebApplications.Mapper\NixWebApplications.Mapper.csproj", "{DB84263C-E6F7-4715-915D-C1A381B7DC92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BC5DAB6-70BD-4ABB-ACA8-EE90DC700309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602D27A7-3E24-4DE1-BA1A-C1A358FD53FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C6C6278-F77E-4A72-B46A-0A596535D64A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C6C6278-F77E-4A72-B46A-0A596535D64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C6C6278-F77E-4A72-B46A-0A596535D64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C6C6278-F77E-4A72-B46A-0A596535D64A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
