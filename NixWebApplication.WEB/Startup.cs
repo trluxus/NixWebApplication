@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,8 +10,10 @@ using NixWebApplication.BLL.Interfaces;
 using NixWebApplication.BLL.Services;
 using NixWebApplication.BLL.Utilities;
 using NixWebApplication.DAL.EF;
+using NixWebApplication.DAL.Entities;
 using NixWebApplication.Mapper.Utilities;
 using NixWebApplication.WEB.Controllers;
+using NixWebApplication.WEB.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +47,25 @@ namespace NixWebApplication.WEB
             services.AddScoped<IPriceToCategoryService, PriceToCategoryService>();
             services.AddScoped<IRoomService, RoomService>();
 
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+
             services.AddControllersWithViews();
+
+            services.AddMvc();
+
+            services.AddIdentityCore<NixWebApplicationUser>()
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<NixAppContext>()
+               .AddSignInManager()
+               .AddDefaultTokenProviders();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+                .AddIdentityCookies(o => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +86,7 @@ namespace NixWebApplication.WEB
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

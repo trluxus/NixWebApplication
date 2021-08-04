@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace NixWebApplication.DAL.EF
 {
-    public class NixAppContext : DbContext
+    public class NixAppContext : IdentityDbContext<NixWebApplicationUser>
     {
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -24,6 +25,8 @@ namespace NixWebApplication.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PriceToCategory>().Property(i => i.Price).HasPrecision(9, 2);
 
             modelBuilder.Entity<Guest>().HasData(SeedData.GuestInitializer());

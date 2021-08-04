@@ -19,8 +19,4 @@
     <ProjectReference Include="..\NixWebApplications.Mapper\NixWebApplications.Mapper.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
