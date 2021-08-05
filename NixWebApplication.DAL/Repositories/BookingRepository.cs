@@ -12,18 +12,18 @@ namespace NixWebApplication.DAL.Repositories
 {
     class BookingRepository : IRepository<Booking>
     {
-        private readonly NixAppContext db;
+        private readonly NixAppContext _db;
 
         public BookingRepository(NixAppContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
-        public void Create(Booking booking)
+        public void Create(Booking item)
         {
-            db.Attach(booking.BookingGuest);
-            db.Attach(booking.BookingRoom);
-            db.Bookings.Add(booking);
+            _db.Attach(item.BookingGuest);
+            _db.Attach(item.BookingRoom);
+            _db.Bookings.Add(item);
         }
 
         public void Delete(int id)
@@ -31,12 +31,12 @@ namespace NixWebApplication.DAL.Repositories
             var booking = Get(id);
 
             if (booking != null)
-                db.Bookings.Remove(booking);
+                _db.Bookings.Remove(booking);
         }
 
         public Booking Get(int id)
         {
-            return db.Bookings
+            return _db.Bookings
                 .Include(b => b.BookingGuest)
                 .Include(b => b.BookingRoom)
                 .FirstOrDefault(i => i.Id == id);
@@ -44,9 +44,14 @@ namespace NixWebApplication.DAL.Repositories
 
         public IEnumerable<Booking> GetAll()
         {
-            return db.Bookings
+            return _db.Bookings
                 .Include(b => b.BookingGuest)
                 .Include(b => b.BookingRoom);
+        }
+
+        public void Update(Booking item)
+        {
+            _db.Bookings.Update(item);
         }
     }
 }

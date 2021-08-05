@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
 using NixWebApplication.Models;
+using NixWebApplication.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,62 @@ namespace NixWebApplication.WEB.Controllers
         }
 
         // GET: GuestController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder,
+            string searchString,
+            string currentFilter,
+            int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["SurnameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "surname_desc" : "";
+            ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
+            ViewData["PatronymicSortParm"] = sortOrder == "Patronymic" ? "patronymic_desc" : "Patronymic";
+
+            ViewData["CurrentFilter"] = searchString;
+
             var data = _service.GetAll();
-            return View(_mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = data.Where(s => s.Name.Contains(searchString)
+                                       || s.Surname.Contains(searchString)
+                                       || s.Patronymic.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "surname_desc":
+                    data = data.OrderByDescending(s => s.Surname);
+                    break;
+                case "Name":
+                    data = data.OrderBy(s => s.Name);
+                    break;
+                case "name_desc":
+                    data = data.OrderByDescending(s => s.Name);
+                    break;
+                case "Patronymic":
+                    data = data.OrderBy(s => s.Patronymic);
+                    break;
+                case "patronymic_desc":
+                    data = data.OrderByDescending(s => s.Patronymic);
+                    break;
+                default:
+                    data = data.OrderBy(s => s.Surname);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(PaginatedList<GuestModel>.
+                Create(_mapper.Map<IEnumerable<GuestDTO>, List<GuestModel>>(data), pageNumber ?? 1, pageSize));
         }
 
         // GET: GuestController/Details/5
@@ -47,58 +100,75 @@ namespace NixWebApplication.WEB.Controllers
         // POST: GuestController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([Bind("Id,Name,Surname,Patronymic,BirthDate,Address")] GuestModel data)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _service.Create(_mapper.Map<GuestModel, GuestDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(data);
         }
 
         // GET: GuestController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var data = _service.Get(id.Value);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return View(_mapper.Map<GuestDTO, GuestModel>(data));
         }
 
         // POST: GuestController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Bind("Id,Name,Surname,Patronymic,BirthDate,Address")] GuestModel data)
         {
-            try
+            if (id != data.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _service.Update(_mapper.Map<GuestModel, GuestDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(data);
         }
 
         // GET: GuestController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var data =  _service.Get(id.Value);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return View(_mapper.Map<GuestDTO, GuestModel>(data));
         }
 
         // POST: GuestController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _service.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

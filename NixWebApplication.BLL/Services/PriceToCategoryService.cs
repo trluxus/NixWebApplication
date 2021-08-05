@@ -48,7 +48,8 @@ namespace NixWebApplication.BLL.Services
 
         public void Update(PriceToCategoryDTO item)
         {
-            throw new NotImplementedException();
+            _database.PricesToCategories.Update(_mapper.Map<PriceToCategoryDTO, PriceToCategory>(item));
+            _database.Save();
         }
     }
 }

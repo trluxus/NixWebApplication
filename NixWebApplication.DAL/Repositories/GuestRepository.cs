@@ -18,9 +18,9 @@ namespace NixWebApplication.DAL.Repositories
             this._db = db;
         }
 
-        public void Create(Guest guest)
+        public void Create(Guest item)
         {
-            _db.Guests.Add(guest);
+            _db.Guests.Add(item);
         }
 
         public void Delete(int id)
@@ -39,6 +39,11 @@ namespace NixWebApplication.DAL.Repositories
         public IEnumerable<Guest> GetAll()
         {
             return _db.Guests;
+        }
+
+        public void Update(Guest item)
+        {
+            _db.Guests.Update(item);
         }
     }
 }

@@ -60,7 +60,8 @@ namespace NixWebApplication.BLL.Services
 
         public void Update(RoomDTO item)
         {
-            throw new NotImplementedException();
+            _database.Rooms.Update(_mapper.Map<RoomDTO, Room>(item));
+            _database.Save();
         }
     }
 }

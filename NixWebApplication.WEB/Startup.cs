@@ -37,6 +37,8 @@ namespace NixWebApplication.WEB
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("NixWebApplication.DAL")));
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddBLLServices();
 
             services.AddClientMapperConfigurations();

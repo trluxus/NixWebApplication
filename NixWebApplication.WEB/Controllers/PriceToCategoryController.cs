@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
 {
+    [Authorize]
     public class PriceToCategoryController : Controller
     {
         private readonly IPriceToCategoryService _service;

@@ -48,7 +48,8 @@ namespace NixWebApplication.BLL.Services
 
         public void Update(GuestDTO item)
         {
-            throw new NotImplementedException();
+            _database.Guests.Update(_mapper.Map<GuestDTO, Guest>(item));
+            _database.Save();
         }
     }
 }

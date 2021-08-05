@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplication.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NixWebApplications.Mapper", "NixWebApplications.Mapper\NixWebApplications.Mapper.csproj", "{DB84263C-E6F7-4715-915D-C1A381B7DC92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NixWebApplication.Pagination", "NixWebApplication.Pagination\NixWebApplication.Pagination.csproj", "{4ACF5B74-0078-401D-A0FF-3E65283034FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB84263C-E6F7-4715-915D-C1A381B7DC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ACF5B74-0078-401D-A0FF-3E65283034FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ACF5B74-0078-401D-A0FF-3E65283034FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ACF5B74-0078-401D-A0FF-3E65283034FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ACF5B74-0078-401D-A0FF-3E65283034FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

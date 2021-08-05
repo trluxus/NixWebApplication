@@ -19,10 +19,10 @@ namespace NixWebApplication.DAL.Repositories
             this._db = db;
         }
 
-        public void Create(Room room)
+        public void Create(Room item)
         {
-            _db.Attach(room.RoomCategory);
-            _db.Rooms.Add(room);
+            _db.Attach(item.RoomCategory);
+            _db.Rooms.Add(item);
         }
 
         public void Delete(int id)
@@ -44,6 +44,12 @@ namespace NixWebApplication.DAL.Repositories
         {
             return _db.Rooms
                 .Include(i => i.RoomCategory);
+        }
+
+        public void Update(Room item)
+        {
+            _db.Attach(item.RoomCategory);
+            _db.Rooms.Update(item);
         }
     }
 }

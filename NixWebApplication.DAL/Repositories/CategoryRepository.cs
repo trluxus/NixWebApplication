@@ -18,9 +18,9 @@ namespace NixWebApplication.DAL.Repositories
             this._db = db;
         }
 
-        public void Create(Category category)
+        public void Create(Category item)
         {
-            _db.Categories.Add(category);
+            _db.Categories.Add(item);
         }
 
         public void Delete(int id)
@@ -39,6 +39,11 @@ namespace NixWebApplication.DAL.Repositories
         public IEnumerable<Category> GetAll()
         {
             return _db.Categories;
+        }
+
+        public void Update(Category item)
+        {
+            _db.Categories.Update(item);
         }
     }
 }
