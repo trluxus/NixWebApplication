@@ -193,7 +193,7 @@ namespace NixWebApplication.WEB.Controllers
         // POST: PriceToCategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             _priceToCategoryService.Delete(id);
 
