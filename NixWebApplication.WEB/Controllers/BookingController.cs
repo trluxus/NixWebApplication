@@ -7,6 +7,7 @@ using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
 using NixWebApplication.Models;
 using NixWebApplication.Pagination;
+using NixWebApplication.WEB.Models.BookingViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -229,6 +230,22 @@ namespace NixWebApplication.WEB.Controllers
             _bookingService.Delete(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: api/<BookingController>/income/2020-01-20
+        public ActionResult Income()
+        {
+            ViewBag.IncomeDateTime = new DateTime();
+
+            return View();         
+        }
+
+        // POST: BookingController/Income/2020-01-20
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncomeResult(IncomeViewModel data)
+        {
+            return View(_bookingService.Income(data.Date));
         }
     }
 }
