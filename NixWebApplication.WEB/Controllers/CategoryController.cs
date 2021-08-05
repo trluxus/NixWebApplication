@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
 using NixWebApplication.Models;
+using NixWebApplication.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,53 @@ namespace NixWebApplication.WEB.Controllers
         }
 
         // GET: CategoryController
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder,
+            string searchString,
+            string currentFilter,
+            int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["BedsSortParm"] = sortOrder == "Beds" ? "beds_desc" : "Beds";
+
+            ViewData["CurrentFilter"] = searchString;
+
             var data = _service.GetAll();
-            return View(_mapper.Map<IEnumerable<CategoryDTO>, List<CategoryModel>>(data));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                data = data.Where(s => s.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    data = data.OrderByDescending(s => s.Name);
+                    break;
+                case "Beds":
+                    data = data.OrderBy(s => s.Beds);
+                    break;
+                case "beds_desc":
+                    data = data.OrderByDescending(s => s.Beds);
+                    break;
+                default:
+                    data = data.OrderBy(s => s.Name);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(PaginatedList<CategoryModel>.
+                Create(_mapper.Map<IEnumerable<CategoryDTO>, List<CategoryModel>>(data), pageNumber ?? 1, pageSize));
         }
 
         // GET: CategoryController/Details/5
@@ -47,58 +91,75 @@ namespace NixWebApplication.WEB.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([Bind("Id,Name,Beds")] CategoryModel data)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _service.Create(_mapper.Map<CategoryModel, CategoryDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(data);
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var data = _service.Get(id.Value);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            return View(_mapper.Map<CategoryDTO, CategoryModel>(data));
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Bind("Id,Name,Beds")] CategoryModel data)
         {
-            try
+            if (id != data.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _service.Update(_mapper.Map<CategoryModel, CategoryDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(data);
         }
 
         // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var data = _service.Get(id.Value);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return View(_mapper.Map<CategoryDTO, CategoryModel>(data));
         }
 
         // POST: CategoryController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _service.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

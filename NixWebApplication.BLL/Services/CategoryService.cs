@@ -30,7 +30,7 @@ namespace NixWebApplication.BLL.Services
 
         public void Delete(int id)
         {
-            _database.Guests.Delete(id);
+            _database.Categories.Delete(id);
             _database.Save();
         }
 
