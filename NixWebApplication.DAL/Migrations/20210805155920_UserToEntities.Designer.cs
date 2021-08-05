@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NixWebApplication.DAL.EF;
 
 namespace NixWebApplication.DAL.Migrations
 {
     [DbContext(typeof(NixAppContext))]
-    partial class NixAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210805155920_UserToEntities")]
+    partial class UserToEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -22,5 +22,10 @@ namespace NixWebApplication.DAL.Entities
 
         [ForeignKey("CategoryId")]
         public virtual Category RoomCategory { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual NixWebApplicationUser ApplicationUser { get; set; }
     }
 }

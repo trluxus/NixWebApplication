@@ -22,5 +22,10 @@ namespace NixWebApplication.DAL.Entities
         [Column(TypeName = "date")]
         public DateTime? BirthDate { get; set; }
         public string Address { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual NixWebApplicationUser ApplicationUser { get; set; }
     }
 }

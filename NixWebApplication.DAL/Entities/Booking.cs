@@ -31,5 +31,10 @@ namespace NixWebApplication.DAL.Entities
         public virtual Guest BookingGuest { get; set; }
         [ForeignKey("RoomId")]
         public virtual Room BookingRoom { get; set; }
+
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual NixWebApplicationUser ApplicationUser { get; set; }
     }
 }
