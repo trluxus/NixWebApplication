@@ -12,6 +12,7 @@ namespace NixWebApplication.BLL.DTO
         public string Name { get; set; }
         public CategoryDTO RoomCategory { get; set; }
         public bool IsActive { get; set; }
-
+        public NixWebApplicationUserDTO ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

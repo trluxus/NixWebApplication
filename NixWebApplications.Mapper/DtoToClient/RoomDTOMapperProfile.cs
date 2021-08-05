@@ -17,6 +17,8 @@ namespace NixWebApplication.Mappers
                 .ForMember(i => i.Name, i => i.MapFrom(j => j.Name))
                 .ForMember(i => i.RoomCategory, i => i.MapFrom(j => j.RoomCategory))
                 .ForMember(i => i.IsActive, i => i.MapFrom(j => j.IsActive))
+                .ForMember(i => i.ApplicationUser, i => i.MapFrom(j => j.ApplicationUser))
+                .ForMember(i => i.TimeStamp, i => i.MapFrom(j => j.TimeStamp))
                 .ReverseMap();
         }
     }

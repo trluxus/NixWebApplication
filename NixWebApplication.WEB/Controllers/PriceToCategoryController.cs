@@ -10,6 +10,7 @@ using NixWebApplication.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
@@ -20,12 +21,15 @@ namespace NixWebApplication.WEB.Controllers
         private readonly IPriceToCategoryService _priceToCategoryService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PriceToCategoryController(IPriceToCategoryService priceToCategoryService, ICategoryService categoryService, IMapper mapper)
+        public PriceToCategoryController(IPriceToCategoryService priceToCategoryService,
+            ICategoryService categoryService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._priceToCategoryService = priceToCategoryService;
             this._categoryService = categoryService;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: PriceToCategoryController
@@ -113,10 +117,16 @@ namespace NixWebApplication.WEB.Controllers
         // POST: PriceToCategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,PriceCategory,Price,StartDate,EndDate")] PriceToCategoryModel data)
+        public ActionResult Create([Bind(nameof(PriceToCategoryModel.Id),
+            nameof(PriceToCategoryModel.PriceCategory), nameof(PriceToCategoryModel.Price),
+            nameof(PriceToCategoryModel.StartDate), nameof(PriceToCategoryModel.EndDate),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] PriceToCategoryModel data)
         {
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _priceToCategoryService.Create(_mapper.Map<PriceToCategoryModel, PriceToCategoryDTO>(data));
 
                 return RedirectToAction(nameof(Index));
@@ -152,7 +162,11 @@ namespace NixWebApplication.WEB.Controllers
         // POST: PriceToCategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Id,PriceCategory,Price,StartDate,EndDate")] PriceToCategoryModel data)
+        public ActionResult Edit(int id,
+            [Bind(nameof(PriceToCategoryModel.Id), nameof(PriceToCategoryModel.PriceCategory),
+            nameof(PriceToCategoryModel.Price), nameof(PriceToCategoryModel.StartDate),
+            nameof(PriceToCategoryModel.EndDate), nameof(CategoryModel.ApplicationUser),
+            nameof(CategoryModel.TimeStamp))] PriceToCategoryModel data)
         {
             if (id != data.Id)
             {
@@ -161,6 +175,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _priceToCategoryService.Update(_mapper.Map<PriceToCategoryModel, PriceToCategoryDTO>(data));
 
                 return RedirectToAction(nameof(Index));

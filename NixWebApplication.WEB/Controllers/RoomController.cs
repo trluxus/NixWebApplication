@@ -11,6 +11,7 @@ using NixWebApplication.WEB.Models.RoomViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
@@ -21,12 +22,15 @@ namespace NixWebApplication.WEB.Controllers
         private readonly IRoomService _roomService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoomController(IRoomService roomService, ICategoryService categoryService, IMapper mapper)
+        public RoomController(IRoomService roomService, ICategoryService categoryService,
+            IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._roomService = roomService;
             this._categoryService = categoryService;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: RoomController
@@ -61,10 +65,10 @@ namespace NixWebApplication.WEB.Controllers
             {
                 case "name_desc":
                     data = data.OrderByDescending(s => s.Name);
-                break;
+                    break;
                 default:
                     data = data.OrderBy(s => s.Name);
-                break;
+                    break;
             }
 
             int pageSize = 3;
@@ -90,10 +94,15 @@ namespace NixWebApplication.WEB.Controllers
         // POST: RoomController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name,RoomCategory,IsActive")] RoomModel data)
+        public ActionResult Create([Bind(nameof(RoomModel.Id), nameof(RoomModel.Name),
+            nameof(RoomModel.RoomCategory), nameof(RoomModel.IsActive),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] RoomModel data)
         {
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _roomService.Create(_mapper.Map<RoomModel, RoomDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
@@ -124,7 +133,9 @@ namespace NixWebApplication.WEB.Controllers
         // POST: RoomController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Id,Name,RoomCategory,IsActive")] RoomModel data)
+        public ActionResult Edit(int id, [Bind(nameof(RoomModel.Id), nameof(RoomModel.Name),
+            nameof(RoomModel.RoomCategory), nameof(RoomModel.IsActive),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] RoomModel data)
         {
             if (id != data.Id)
             {
@@ -133,6 +144,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _roomService.Update(_mapper.Map<RoomModel, RoomDTO>(data));
                 return RedirectToAction(nameof(Index));
             }

@@ -15,6 +15,7 @@ namespace NixWebApplication.Mapper.Utilities
             services.AddAutoMapper(typeof(BookingDTOMapperProfile));
             services.AddAutoMapper(typeof(CategoryDTOMapperProfile));
             services.AddAutoMapper(typeof(GuestDTOMapperProfile));
+            services.AddAutoMapper(typeof(IdentityDTOMapperProfile));
             services.AddAutoMapper(typeof(PriceToCategoryDTOMapperProfile));
             services.AddAutoMapper(typeof(RoomDTOMapperProfile));
         }

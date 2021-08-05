@@ -21,6 +21,7 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(Room item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Attach(item.RoomCategory);
             _db.Rooms.Add(item);
         }
@@ -36,6 +37,7 @@ namespace NixWebApplication.DAL.Repositories
         public Room Get(int id)
         {
             return _db.Rooms
+                .Include(b => b.ApplicationUser)
                 .Include(i => i.RoomCategory)
                 .FirstOrDefault(i => i.Id == id);
         }
@@ -43,11 +45,13 @@ namespace NixWebApplication.DAL.Repositories
         public IEnumerable<Room> GetAll()
         {
             return _db.Rooms
+                .Include(b => b.ApplicationUser)
                 .Include(i => i.RoomCategory);
         }
 
         public void Update(Room item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Attach(item.RoomCategory);
             _db.Rooms.Update(item);
         }

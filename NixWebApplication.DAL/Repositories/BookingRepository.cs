@@ -21,6 +21,7 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(Booking item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Attach(item.BookingGuest);
             _db.Attach(item.BookingRoom);
             _db.Bookings.Add(item);
@@ -37,6 +38,7 @@ namespace NixWebApplication.DAL.Repositories
         public Booking Get(int id)
         {
             return _db.Bookings
+                .Include(b => b.ApplicationUser)
                 .Include(b => b.BookingGuest)
                 .Include(b => b.BookingRoom)
                 .FirstOrDefault(i => i.Id == id);
@@ -45,12 +47,16 @@ namespace NixWebApplication.DAL.Repositories
         public IEnumerable<Booking> GetAll()
         {
             return _db.Bookings
+                .Include(b => b.ApplicationUser)
                 .Include(b => b.BookingGuest)
                 .Include(b => b.BookingRoom);
         }
 
         public void Update(Booking item)
         {
+            _db.Attach(item.ApplicationUser);
+            _db.Attach(item.BookingGuest);
+            _db.Attach(item.BookingRoom);
             _db.Bookings.Update(item);
         }
     }

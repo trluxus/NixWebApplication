@@ -20,6 +20,7 @@ namespace NixWebApplication.BLL.Utilities
             services.AddAutoMapper(typeof(BookingMapperProfile));
             services.AddAutoMapper(typeof(CategoryMapperProfile));
             services.AddAutoMapper(typeof(GuestMapperProfile));
+            services.AddAutoMapper(typeof(IdentityMapperProfile));
             services.AddAutoMapper(typeof(PriceToCategoryMapperProfile));
             services.AddAutoMapper(typeof(RoomMapperProfile));
         }

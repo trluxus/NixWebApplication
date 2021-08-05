@@ -21,6 +21,7 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(PriceToCategory item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Attach(item.PriceCategory);
             _db.PricesToCategories.Add(item);
         }
@@ -36,6 +37,7 @@ namespace NixWebApplication.DAL.Repositories
         public PriceToCategory Get(int id)
         {
             return _db.PricesToCategories
+                .Include(b => b.ApplicationUser)
                 .Include(i => i.PriceCategory)
                 .FirstOrDefault(i => i.Id == id);
         }
@@ -43,11 +45,13 @@ namespace NixWebApplication.DAL.Repositories
         public IEnumerable<PriceToCategory> GetAll()
         {
             return _db.PricesToCategories
+                .Include(b => b.ApplicationUser)
                 .Include(i => i.PriceCategory);
         }
 
         public void Update(PriceToCategory item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Attach(item.PriceCategory);
             _db.PricesToCategories.Update(item);
         }

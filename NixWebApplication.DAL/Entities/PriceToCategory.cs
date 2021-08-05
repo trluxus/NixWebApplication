@@ -29,5 +29,7 @@ namespace NixWebApplication.DAL.Entities
 
         [ForeignKey("UserId")]
         public virtual NixWebApplicationUser ApplicationUser { get; set; }
+
+        public DateTime TimeStamp { get; set; } 
     }
 }

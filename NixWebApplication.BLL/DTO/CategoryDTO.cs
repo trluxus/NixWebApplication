@@ -11,5 +11,7 @@ namespace NixWebApplication.BLL.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public int Beds { get; set; }
+        public NixWebApplicationUserDTO ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

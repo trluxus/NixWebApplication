@@ -13,6 +13,8 @@ namespace NixWebApplication.Models
         public DateTime BookingDate { get; set; }
         public DateTime EnterDate { get; set; }
         public DateTime LeaveDate { get; set; }
+        public NixWebApplicationUserModel ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public override bool Equals(object obj)
         {

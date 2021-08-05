@@ -11,6 +11,8 @@ namespace NixWebApplication.Models
         public string Name { get; set; }
         public CategoryModel RoomCategory { get; set; }
         public bool IsActive { get; set; }
+        public NixWebApplicationUserModel ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public override bool Equals(object obj)
         {

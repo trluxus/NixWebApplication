@@ -41,6 +41,8 @@ namespace NixWebApplication.WEB
 
             services.AddBLLServices();
 
+            services.AddHttpContextAccessor();
+
             services.AddClientMapperConfigurations();
 
             services.AddScoped<IBookingService, BookingService>();

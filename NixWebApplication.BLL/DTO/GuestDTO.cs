@@ -14,5 +14,7 @@ namespace NixWebApplication.BLL.DTO
         public string Patronymic { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Address { get; set; }
+        public NixWebApplicationUserDTO ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

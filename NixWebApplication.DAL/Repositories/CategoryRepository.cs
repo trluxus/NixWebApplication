@@ -1,4 +1,5 @@
-﻿using NixWebApplication.DAL.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using NixWebApplication.DAL.EF;
 using NixWebApplication.DAL.Entities;
 using NixWebApplication.DAL.Interfaces;
 using System;
@@ -20,6 +21,7 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(Category item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Categories.Add(item);
         }
 
@@ -33,16 +35,20 @@ namespace NixWebApplication.DAL.Repositories
 
         public Category Get(int id)
         {
-            return _db.Categories.Find(id);
+            return _db.Categories
+                .Include(b => b.ApplicationUser)
+                .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Category> GetAll()
         {
-            return _db.Categories;
+            return _db.Categories
+                .Include(b => b.ApplicationUser);
         }
 
         public void Update(Category item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Categories.Update(item);
         }
     }

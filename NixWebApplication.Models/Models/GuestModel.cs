@@ -13,6 +13,8 @@ namespace NixWebApplication.Models
         public string Patronymic { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Address { get; set; }
+        public NixWebApplicationUserModel ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public override bool Equals(object obj)
         {

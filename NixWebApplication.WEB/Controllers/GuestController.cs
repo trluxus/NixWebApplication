@@ -9,6 +9,7 @@ using NixWebApplication.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
@@ -18,11 +19,13 @@ namespace NixWebApplication.WEB.Controllers
     {
         private readonly IGuestService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GuestController(IGuestService service, IMapper mapper)
+        public GuestController(IGuestService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: GuestController
@@ -100,10 +103,16 @@ namespace NixWebApplication.WEB.Controllers
         // POST: GuestController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name,Surname,Patronymic,BirthDate,Address")] GuestModel data)
+        public ActionResult Create([Bind(nameof(GuestModel.Id), nameof(GuestModel.Name),
+            nameof(GuestModel.Surname), nameof(GuestModel.Patronymic),
+            nameof(GuestModel.BirthDate),  nameof(GuestModel.Address),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] GuestModel data)
         {
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _service.Create(_mapper.Map<GuestModel, GuestDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
@@ -129,7 +138,11 @@ namespace NixWebApplication.WEB.Controllers
         // POST: GuestController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Id,Name,Surname,Patronymic,BirthDate,Address")] GuestModel data)
+        public ActionResult Edit(int id,
+            [Bind(nameof(GuestModel.Id), nameof(GuestModel.Name),
+            nameof(GuestModel.Surname), nameof(GuestModel.Patronymic),
+            nameof(GuestModel.BirthDate),  nameof(GuestModel.Address),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] GuestModel data)
         {
             if (id != data.Id)
             {
@@ -138,6 +151,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _service.Update(_mapper.Map<GuestModel, GuestDTO>(data));
                 return RedirectToAction(nameof(Index));
             }

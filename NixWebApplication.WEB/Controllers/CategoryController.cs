@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
+using NixWebApplication.DAL.Entities;
 using NixWebApplication.Models;
 using NixWebApplication.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
@@ -18,11 +21,13 @@ namespace NixWebApplication.WEB.Controllers
     {
         private readonly ICategoryService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CategoryController(ICategoryService service, IMapper mapper)
+        public CategoryController(ICategoryService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: CategoryController
@@ -91,10 +96,15 @@ namespace NixWebApplication.WEB.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Id,Name,Beds")] CategoryModel data)
+        public ActionResult Create([Bind(nameof(CategoryModel.Id), nameof(CategoryModel.Name),
+            nameof(CategoryModel.Beds), nameof(CategoryModel.ApplicationUser),
+            nameof(CategoryModel.TimeStamp))] CategoryModel data)
         {
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _service.Create(_mapper.Map<CategoryModel, CategoryDTO>(data));
                 return RedirectToAction(nameof(Index));
             }
@@ -120,7 +130,10 @@ namespace NixWebApplication.WEB.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Id,Name,Beds")] CategoryModel data)
+        public ActionResult Edit(int id, 
+            [Bind(nameof(CategoryModel.Id), nameof(CategoryModel.Name),
+            nameof(CategoryModel.Beds), nameof(CategoryModel.ApplicationUser),
+            nameof(CategoryModel.TimeStamp))] CategoryModel data)
         {
             if (id != data.Id)
             {
@@ -129,6 +142,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _service.Update(_mapper.Map<CategoryModel, CategoryDTO>(data));
                 return RedirectToAction(nameof(Index));
             }

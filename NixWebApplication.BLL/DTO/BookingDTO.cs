@@ -14,5 +14,7 @@ namespace NixWebApplication.BLL.DTO
         public DateTime BookingDate { get; set; }
         public DateTime EnterDate { get; set; }
         public DateTime LeaveDate { get; set; }
+        public NixWebApplicationUserDTO ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

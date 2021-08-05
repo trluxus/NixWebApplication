@@ -11,6 +11,7 @@ using NixWebApplication.WEB.Models.BookingViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.WEB.Controllers
@@ -23,13 +24,17 @@ namespace NixWebApplication.WEB.Controllers
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         public BookingController(IBookingService bookingService,
-            IGuestService guestService, IRoomService roomService, IMapper mapper)
+            IGuestService guestService, IRoomService roomService, IMapper mapper, 
+            IHttpContextAccessor httpContextAccessor)
         {
             this._bookingService = bookingService;
             this._guestService = guestService;
             this._roomService = roomService;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: BookingController
@@ -131,10 +136,14 @@ namespace NixWebApplication.WEB.Controllers
         public ActionResult Create(
             [Bind(nameof(BookingModel.Id), nameof(BookingModel.BookingGuest),
             nameof(BookingModel.BookingRoom), nameof(BookingModel.BookingDate),
-            nameof(BookingModel.EnterDate), nameof(BookingModel.LeaveDate))] BookingModel data)
+            nameof(BookingModel.EnterDate), nameof(BookingModel.LeaveDate),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] BookingModel data)
         {
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 data.BookingDate = DateTime.Now;
 
                 _bookingService.Create(_mapper.Map<BookingModel, BookingDTO>(data));
@@ -181,7 +190,8 @@ namespace NixWebApplication.WEB.Controllers
         public ActionResult Edit(int id,
             [Bind(nameof(BookingModel.Id), nameof(BookingModel.BookingGuest),
             nameof(BookingModel.BookingRoom), nameof(BookingModel.BookingDate),
-            nameof(BookingModel.EnterDate), nameof(BookingModel.LeaveDate))] BookingModel data)
+            nameof(BookingModel.EnterDate), nameof(BookingModel.LeaveDate),
+            nameof(CategoryModel.ApplicationUser), nameof(CategoryModel.TimeStamp))] BookingModel data)
         {
             if (id != data.Id)
             {
@@ -190,6 +200,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (ModelState.IsValid)
             {
+                data.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+                data.TimeStamp = DateTime.Now;
+
                 _bookingService.Update(_mapper.Map<BookingModel, BookingDTO>(data));
 
                 return RedirectToAction(nameof(Index));

@@ -1,4 +1,5 @@
-﻿using NixWebApplication.DAL.EF;
+﻿using Microsoft.EntityFrameworkCore;
+using NixWebApplication.DAL.EF;
 using NixWebApplication.DAL.Entities;
 using NixWebApplication.DAL.Interfaces;
 using System;
@@ -20,6 +21,7 @@ namespace NixWebApplication.DAL.Repositories
 
         public void Create(Guest item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Guests.Add(item);
         }
 
@@ -33,16 +35,20 @@ namespace NixWebApplication.DAL.Repositories
 
         public Guest Get(int id)
         {
-            return _db.Guests.Find(id);
+            return _db.Guests
+                .Include(b => b.ApplicationUser)
+                .FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Guest> GetAll()
         {
-            return _db.Guests;
+            return _db.Guests
+                .Include(b => b.ApplicationUser);
         }
 
         public void Update(Guest item)
         {
+            _db.Attach(item.ApplicationUser);
             _db.Guests.Update(item);
         }
     }

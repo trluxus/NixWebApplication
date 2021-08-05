@@ -12,6 +12,8 @@ namespace NixWebApplication.Models
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public NixWebApplicationUserModel ApplicationUser { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public override bool Equals(object obj)
         {

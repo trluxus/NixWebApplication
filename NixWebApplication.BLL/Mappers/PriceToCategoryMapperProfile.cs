@@ -19,6 +19,8 @@ namespace NixWebApplication.BLL.Mappers
                .ForMember(i => i.Price, i => i.MapFrom(j => j.Price))
                .ForMember(i => i.StartDate, i => i.MapFrom(j => j.StartDate))
                .ForMember(i => i.EndDate, i => i.MapFrom(j => j.EndDate))
+               .ForMember(i => i.ApplicationUser, i => i.MapFrom(j => j.ApplicationUser))
+               .ForMember(i => i.TimeStamp, i => i.MapFrom(j => j.TimeStamp))
                .ReverseMap();
         }
     }
