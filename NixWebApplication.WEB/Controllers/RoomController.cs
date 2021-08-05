@@ -167,5 +167,21 @@ namespace NixWebApplication.WEB.Controllers
             _roomService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: RoomController/FindEmpty
+        public ActionResult FindEmpty()
+        {
+            ViewBag.IncomeDateTime = new DateTime();
+
+            return View();
+        }
+
+        // POST: RoomController/FindEmptyResult
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FindEmptyResult(EmptyRoomViewModel data)
+        {
+            return View(_mapper.Map<IEnumerable<RoomDTO>, IEnumerable<RoomModel>>(_roomService.FindEmpty(data.StartDate, data.EndDate)));
+        }
     }
 }

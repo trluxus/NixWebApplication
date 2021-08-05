@@ -232,11 +232,9 @@ namespace NixWebApplication.WEB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: api/<BookingController>/income/2020-01-20
+        // GET: BookingController/income/2020-01-20
         public ActionResult Income()
         {
-            ViewBag.IncomeDateTime = new DateTime();
-
             return View();         
         }
 

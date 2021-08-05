@@ -1,0 +1,48 @@
+﻿@model IEnumerable<RoomModel>
+
+@{
+    ViewData["Title"] = "Rooms result";
+}
+
+<h1>Rooms result</h1>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                RoomName
+            </th>
+            <th>
+                RoomCategory
+            </th>
+            <th>
+                IsActive
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomCategory.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
