@@ -66,8 +66,8 @@ namespace NixWebApplication.WEB.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                data = data.Where(s => s.BookingGuest.Surname.Contains(searchString)
-                                     || s.BookingRoom.Name.Contains(searchString));
+                data = data.Where(s => s.BookingGuest.Surname.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)
+                                     || s.BookingRoom.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
             }
 
             switch (sortOrder)

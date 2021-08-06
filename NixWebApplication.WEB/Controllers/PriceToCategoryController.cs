@@ -60,7 +60,7 @@ namespace NixWebApplication.WEB.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                data = data.Where(s => s.PriceCategory.Name.Contains(searchString));
+                data = data.Where(s => s.PriceCategory.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
             }
 
             switch (sortOrder)

@@ -55,9 +55,9 @@ namespace NixWebApplication.WEB.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                data = data.Where(s => s.Name.Contains(searchString)
-                                       || s.Surname.Contains(searchString)
-                                       || s.Patronymic.Contains(searchString));
+                data = data.Where(s => s.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)
+                                       || s.Surname.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)
+                                       || s.Patronymic.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
             }
 
             switch (sortOrder)
