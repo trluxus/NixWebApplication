@@ -44,7 +44,7 @@ namespace NixWebApplication.API.Controllers
         }
 
         // GET: api/<RoomController>/empty/2020-01-20/2020-03-16
-        [HttpGet("empty/{startDate}/{endDate}"), Route("empty")]
+        [HttpGet("emptyAPI/{startDate}/{endDate}")]
         public IEnumerable<RoomModel> FindEmpty(string startDate, string endDate)
         {
             var data = _service.FindEmpty(DateTime.Parse(startDate), DateTime.Parse(endDate));

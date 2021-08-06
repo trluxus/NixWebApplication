@@ -44,7 +44,7 @@ namespace NixWebApplication.API.Controllers
         }
 
         // GET: api/<BookingController>/income/2020-01-20
-        [HttpGet("income/{date}"), Route("income")]
+        [HttpGet("incomeAPI/{date}")]
         public decimal Income(string date)
         {
             return _service.Income(DateTime.Parse(date));
