@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
@@ -6,6 +7,7 @@ using NixWebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.API.Controllers
@@ -16,11 +18,13 @@ namespace NixWebApplication.API.Controllers
     {
         private readonly IRoomService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoomController(IRoomService service, IMapper mapper)
+        public RoomController(IRoomService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: api/<RoomController>
@@ -51,13 +55,20 @@ namespace NixWebApplication.API.Controllers
         [HttpPost]
         public void Post(RoomModel room)
         {
+            room.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            room.TimeStamp = DateTime.Now;
+
             _service.Create(_mapper.Map<RoomModel, RoomDTO>(room));
         }
 
         // PUT api/<RoomController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, RoomModel room)
         {
+            room.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            room.TimeStamp = DateTime.Now;
+
+            _service.Update(_mapper.Map<RoomModel, RoomDTO>(room));
         }
 
         // DELETE api/<RoomController>

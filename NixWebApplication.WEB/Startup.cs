@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NixWebApplication.API.Controllers;
 using NixWebApplication.BLL.Interfaces;
 using NixWebApplication.BLL.Services;
 using NixWebApplication.BLL.Utilities;
@@ -56,7 +57,8 @@ namespace NixWebApplication.WEB
 
             services.AddControllersWithViews();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddApplicationPart(typeof(API.Controllers.GuestController).Assembly); ;
 
             services.AddIdentityCore<NixWebApplicationUser>()
                .AddRoles<IdentityRole>()

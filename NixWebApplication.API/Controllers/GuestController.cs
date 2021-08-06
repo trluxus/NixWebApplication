@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
@@ -6,6 +7,7 @@ using NixWebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,11 +20,13 @@ namespace NixWebApplication.API.Controllers
     {
         private readonly IGuestService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GuestController(IGuestService service, IMapper mapper)
+        public GuestController(IGuestService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: api/<GuestController>
@@ -45,6 +49,9 @@ namespace NixWebApplication.API.Controllers
         [HttpPost]
         public void Post([FromBody] GuestModel guest)
         {
+            guest.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            guest.TimeStamp = DateTime.Now;
+
             _service.Create(_mapper.Map<GuestModel, GuestDTO>(guest));
         }
 
@@ -52,6 +59,10 @@ namespace NixWebApplication.API.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] GuestModel guest)
         {
+            guest.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            guest.TimeStamp = DateTime.Now;
+
+            _service.Update(_mapper.Map<GuestModel, GuestDTO>(guest));
         }
 
         // DELETE api/<GuestController>/5

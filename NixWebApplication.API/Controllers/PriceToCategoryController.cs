@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
@@ -6,6 +7,7 @@ using NixWebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,11 +20,13 @@ namespace NixWebApplication.API.Controllers
     {
         private readonly IPriceToCategoryService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PriceToCategoryController(IPriceToCategoryService service, IMapper mapper)
+        public PriceToCategoryController(IPriceToCategoryService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: api/<PriceToCategoryController>
@@ -45,13 +49,20 @@ namespace NixWebApplication.API.Controllers
         [HttpPost]
         public void Post([FromBody] PriceToCategoryModel priceToCategory)
         {
+            priceToCategory.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            priceToCategory.TimeStamp = DateTime.Now;
+
             _service.Create(_mapper.Map<PriceToCategoryModel, PriceToCategoryDTO>(priceToCategory));
         }
 
         // PUT api/<PriceToCategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] PriceToCategoryModel priceToCategory)
         {
+            priceToCategory.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            priceToCategory.TimeStamp = DateTime.Now;
+
+            _service.Update(_mapper.Map<PriceToCategoryModel, PriceToCategoryDTO>(priceToCategory));
         }
 
         // DELETE api/<PriceToCategoryController>/5

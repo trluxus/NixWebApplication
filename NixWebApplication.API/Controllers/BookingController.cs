@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NixWebApplication.BLL.DTO;
 using NixWebApplication.BLL.Interfaces;
@@ -6,6 +7,7 @@ using NixWebApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NixWebApplication.API.Controllers
@@ -16,11 +18,13 @@ namespace NixWebApplication.API.Controllers
     {
         private readonly IBookingService _service;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BookingController(IBookingService service, IMapper mapper)
+        public BookingController(IBookingService service, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._service = service;
             this._mapper = mapper;
+            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: api/<BookingController>
@@ -50,13 +54,20 @@ namespace NixWebApplication.API.Controllers
         [HttpPost]
         public void Post([FromBody] BookingModel booking)
         {
+            booking.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            booking.TimeStamp = DateTime.Now;
+
             _service.Create(_mapper.Map<BookingModel, BookingDTO>(booking));
         }
 
         // PUT api/<BookingController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] BookingModel booking)
         {
+            booking.ApplicationUser = new() { Id = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) };
+            booking.TimeStamp = DateTime.Now;
+
+            _service.Update(_mapper.Map<BookingModel, BookingDTO>(booking));
         }
 
         // DELETE api/<BookingController>

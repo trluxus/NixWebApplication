@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NixWebApplication.API\NixWebApplication.API.csproj" />
     <ProjectReference Include="..\NixWebApplication.BLL\NixWebApplication.BLL.csproj" />
     <ProjectReference Include="..\NixWebApplication.Models\NixWebApplication.Models.csproj" />
     <ProjectReference Include="..\NixWebApplication.Pagination\NixWebApplication.Pagination.csproj" />
