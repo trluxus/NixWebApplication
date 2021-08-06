@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,8 +11,11 @@ namespace NixWebApplication.Models
         public int Id { get; set; }
         public GuestModel BookingGuest { get; set; }
         public RoomModel BookingRoom { get; set; }
+        [DataType(DataType.Date)]
         public DateTime BookingDate { get; set; }
+        [DataType(DataType.Date)]
         public DateTime EnterDate { get; set; }
+        [DataType(DataType.Date)]
         public DateTime LeaveDate { get; set; }
         public NixWebApplicationUserModel ApplicationUser { get; set; }
         public DateTime TimeStamp { get; set; }
